@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document */
+
+.clear{
+	clear:both;
+}
+ul{
+	margin:0;
+	padding:0;
+}
+
+#myshopping_cart{
+	width:637px;
+	height:417px;
+}
+#mycart_title{
+	float:left;
+	width:637px;
+	height:25px;
+}
+#mycart_title li{
+	margin:0;
+	padding:0;
+	float:left;
+	width:150px;
+	background-color:#f2f2f2;
+	margin-left:2px;
+	list-style:none;
+}
+
+.mycart_product{
+	float:left;
+	width:637px;
+	height:70px;
+	border-bottom:1px solid #e2e2e2;
+}
+.mycart_product li{
+	margin:0;
+	padding:0;
+	float:left;
+	width:150px;
+	list-style:none;
+	height:70px;
+	text-align:center;
+}
+
