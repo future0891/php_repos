@@ -9,13 +9,14 @@
 	<script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script>
 	<script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 	<script type="text/javascript">
-        
         $(function(){
          var treeNodes = {$data};
          var setting = {
             data: {
                 simpleData: {
-                    enable: true
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pid",
                 }
             },
            callback: {

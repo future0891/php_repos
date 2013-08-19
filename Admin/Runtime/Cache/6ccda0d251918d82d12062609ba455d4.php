@@ -1,36 +1,47 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>showChannel</title><link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" /><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script><script type="text/javascript">
-        data = <?php echo ($data); ?>;
+"http://www.w3.org/TR/html4/strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>showChannel</title><link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" /><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.excheck-3.5.js"></script><script type="text/javascript">
+        var t;
         $(function(){
             var settings = {
             data: {
                 simpleData: {
-                    enable: true
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "pid",
+                    rootPId: 0
                 }
             },
+            async:{
+                enable:true,
+                url:'channelInfo',
+            },
            callback: {
-                onClick:showInfo
+                onClick:showframe,
            }
             
         };
-        function showInfo(event , treeId , treeNode){
-            alert(treeNode.name);
+        function showframe(event , treeId , treeNode){
+            $("#pc").attr("src" , "__APP__/Channel/showInfo/id/"+treeNode.id);
         }
-        $.fn.zTree.init($("#tree") , settings , data);
+        t= $.fn.zTree.init($("#tree") , settings);
+        easyloader.theme="bootstrap";
         });
+        function refreshTree() {
+            t.reAsyncChildNodes(null ,"refresh");
+        }
             
         </script><style type="text/css">
             #c_wrap {
                 float:left;
                 position:relative;
-                width:38%;
+                width:18%;
                 height:500px;
                 border:#0081C2 dashed 1px;
             }
             #c_content {
                 float:left;
                 position:relative;
-                width:61%;
+                width:71%;
                 height:500px;
                 border-right:#0081C2 dashed 1px;
                 border-top:#0081C2 dashed 1px;
