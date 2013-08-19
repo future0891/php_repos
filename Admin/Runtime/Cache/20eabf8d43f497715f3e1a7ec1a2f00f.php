@@ -14,7 +14,7 @@
             
         };
         function showChannel(event , treeId , treeNode) {
-            $("#cc").attr("src" ,"__URL__/showChannel/id/"+treeNode.id);
+           
         }
         
                    

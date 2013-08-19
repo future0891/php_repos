@@ -34,12 +34,10 @@
             $("#pc").attr("src" , "__APP__/Channel/showInfo/id/"+treeNode.id);
         }
         t= $.fn.zTree.init($("#tree") , settings);
-        easyloader.theme="bootstrap";
         });
         function refreshTree() {
             t.reAsyncChildNodes(null ,"refresh");
-        }
-            
+        }   
         </script>
         <style type="text/css">
             #c_wrap {

@@ -4,10 +4,13 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<title>Document</title>
 </head>
+<script>
+    parent.refreshTree();
+</script>
 <body>
-	<form action="">
-	    <input type="text" name="name" value="{$data.name}" id=""><br/>
-	    <input type="text" name="pid" value="{$data.pid}" id=""><br/>
+	<form action="__URL__/updateProcess/id/{$data.id}" method="post">
+	    <input type="text" name="name" value="{$data.name}" ><br/>
+	    <input type="text" name="pid" value="{$data.pid}"><br/>
 	    <input type="submit" value="修改" />
     </form>
 </body>

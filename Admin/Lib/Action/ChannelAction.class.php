@@ -28,6 +28,17 @@
 			$this->display();
 		}
 		
+		public function updateProcess($id=0) {
+			if(0!=$id) {
+				$db = M("Channel");
+				if($db->create()) {
+					$db->where("id=".$id)->save($_POST);
+				}
+			$pid = $db->where("id=".$id)->getField('pid');
+			}
+			$this->redirect('Channel/showInfo/' , array('id' => $pid) );
+		}
+		
 	}
 
 ?>
