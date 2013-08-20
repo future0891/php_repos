@@ -12,28 +12,15 @@
     <script type="text/javascript">
         $(function(){
             easyloader.theme = "bootstrap";
+            $(".delbtn").click(function(){
+               if(!confirm("该操作不可逆,是否删除!")) {
+                   return false;
+               }
+            });
         });
         parent.refreshTree();
     </script>
 <style type="text/css">
-    
-a.list_op:link,a.list_op:visited {
-    background:#921;
-    padding:4px;
-    color:#fff;
-    text-decoration:none;
-}
-a.list_op:hover {
-    background:#971;
-}
-a.list_link:link,a.list_link:visited {
-    color:#932;
-    text-decoration: none;
-}
-a.list_link:hover{
-    color:#239;
-    text-decoration: underline;
-}
 table {
     margin-top:15px;
     margin-left:30px;
@@ -78,7 +65,7 @@ table thead td{
                     <td>{$vo.name}</td>
                     <td>
                         <a href="__URL__/update/id/{$vo.id}" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">更新</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="__URL__/delete/id/{$vo.id}"  class="easyui-linkbutton" data-options="iconCls:'icon-remove'">删除</a>
+                        <a href="__URL__/delete/id/{$vo.id}"  class="easyui-linkbutton delbtn" data-options="iconCls:'icon-remove'">删除</a>
                    </td>
             </tr>
 		</volist>

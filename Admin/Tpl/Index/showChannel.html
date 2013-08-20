@@ -12,28 +12,32 @@
         <script type="text/javascript">
         var t;
         $(function(){
-            var settings = {
-            data: {
-                simpleData: {
-                    enable: true,
-                    idKey: "id",
-                    pIdKey: "pid",
-                    rootPId: 0
-                }
-            },
-            async:{
-                enable:true,
-                url:'channelInfo',
-            },
-           callback: {
-                onClick:showframe,
-           }
-            
-        };
-        function showframe(event , treeId , treeNode){
-            $("#pc").attr("src" , "__APP__/Channel/showInfo/id/"+treeNode.id);
-        }
-        t= $.fn.zTree.init($("#tree") , settings);
+              var settings = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pid",
+                        rootPId: 1
+                    }
+                },
+                async:{
+                    enable:true,
+                    url:'channelInfo',
+                },
+               callback: {
+                    onClick:showframe,
+               }
+                
+            };
+            function showframe(event , treeId , treeNode){
+                $("#pc").attr("src" , "__APP__/Channel/showInfo/pid/"+treeNode.id);
+            }
+    
+            $("#ac").click(function(){
+                $("#pc").attr("src" , "__APP__/Channel/add");
+            });
+            t = $.fn.zTree.init($("#tree") , settings);
         });
         function refreshTree() {
             t.reAsyncChildNodes(null ,"refresh");
@@ -62,6 +66,7 @@
         <div id="c_wrap">
             <ul id="tree" class="ztree"></ul>
         </div>
+        <a href = "#" id ="ac">栏目添加</a>
         <div id="c_content">
             <iframe id="pc" src="__APP__/Channel/add" style="height: 100%;width: 100%"></iframe>
         </div>
