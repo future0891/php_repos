@@ -6,7 +6,6 @@
                }
             });
         });
-        parent.refreshTree();
     </script><style type="text/css">table {
     margin-top:15px;
     margin-left:30px;

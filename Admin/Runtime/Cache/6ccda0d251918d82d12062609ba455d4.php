@@ -8,7 +8,7 @@
                         enable: true,
                         idKey: "id",
                         pIdKey: "pid",
-                        rootPId: 1
+                        rootPId: -1
                     }
                 },
                 async:{
@@ -29,9 +29,7 @@
             });
             t = $.fn.zTree.init($("#tree") , settings);
         });
-        function refreshTree() {
-            t.reAsyncChildNodes(null ,"refresh");
-        }   
+
         </script><style type="text/css">
             #c_wrap {
                 float:left;
@@ -49,4 +47,4 @@
                 border-top:#0081C2 dashed 1px;
                 border-bottom:#0081C2 dashed 1px;
             }
-        </style></head><body><div id="c_wrap"><ul id="tree" class="ztree"></ul></div><a href = "#" id ="ac">栏目添加</a><div id="c_content"><iframe id="pc" src="__APP__/Channel/add" style="height: 100%;width: 100%"></iframe></div></body></html>
+        </style></head><body><div id="c_wrap"><a href = "#" id ="ac">栏目添加</a><ul id="tree" class="ztree"></ul></div><div id="c_content"><iframe id="pc" src="__APP__/Channel/add" style="height: 100%;width: 100%"></iframe></div></body></html>

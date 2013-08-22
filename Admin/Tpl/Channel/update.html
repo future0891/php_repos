@@ -16,6 +16,7 @@
                         enable: true,
                         idKey: "id",
                         pIdKey: "pid",
+                        root:-1
                     }
                 },
                 callback: {
@@ -57,8 +58,6 @@
                 t.expandAll(true);
                 $("#channel").click(showMenu );
             });
-
-    parent.refreshTree();
 </script>
 <body>
 	<form action="__URL__/updateProcess/id/{$data.id}" method="post">

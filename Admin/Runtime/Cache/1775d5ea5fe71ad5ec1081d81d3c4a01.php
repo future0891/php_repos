@@ -4,21 +4,16 @@
                         enable: true,
                         idKey: "id",
                         pIdKey: "pid",
+                        root:-1
                     }
                 },
                 callback: {
-                    beforeClick: beforeClick,
                     onClick: onClick
                 }
             };
     
             var zNodes =<?php echo ($channel); ?>;
             
-            function beforeClick(treeId, treeNode) {
-                var check = (treeNode && treeNode.isParent);
-                if (!check) alert("只能品种...");
-                return check;
-            }
             
             function onClick(e, treeId, treeNode) {
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
@@ -50,5 +45,4 @@
                 t.expandAll(true);
                 $("#channel").click(showMenu );
             });
-    	    parent.refreshTree();   
     	</script></head><body><form action="__URL__/addProcess" method="post"><label for="">添加名字</label><input type="text" name="name" id="" /><br/><label for="">选择种类</label><input type="text" readonly="readonly" name="pname" id="channel" />&nbsp;<input type="hidden" id = "pid" name="pid" value="" /><input type="submit" id="ss" value="提交"  /></form><div id="menuContent" class="menuContent" style="display:none; position: absolute;z-index: 999"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>

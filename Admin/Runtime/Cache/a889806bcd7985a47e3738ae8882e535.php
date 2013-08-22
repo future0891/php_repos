@@ -4,6 +4,7 @@
                         enable: true,
                         idKey: "id",
                         pIdKey: "pid",
+                        root:-1
                     }
                 },
                 callback: {
@@ -45,6 +46,4 @@
                 t.expandAll(true);
                 $("#channel").click(showMenu );
             });
-
-    parent.refreshTree();
-</script><body><form action="__URL__/updateProcess/id/<?php echo ($data["id"]); ?>" method="post"><input type="text" name="name" value="<?php echo ($data["name"]); ?>" ><br/><input type="text" name="pname" id="channel" value="<?php echo ($pname); ?>"><br/><input type="hidden" name="pid" value="<?php echo ($data["pid"]); ?>" id="pid" /><input type="submit" value="修改" /></form><div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>
+</script><body><form action="__URL__/updateProcess/id/<?php echo ($data["id"]); ?>" method="post"><input type="text" name="name" value="<?php echo ($data["name"]); ?>" ><br/><input type="text" name="pname" readonly="readonly" id="channel" value="<?php echo ($pname); ?>"><br/><input type="hidden" name="pid" value="<?php echo ($data["pid"]); ?>" id="pid" /><input type="submit" value="修改" /></form><div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>

@@ -55,7 +55,7 @@
 			if($pid ==null) {
 				$pid = 0;
 			}
-			$this->redirect('Channel/showInfo/' , array('id' => $pid) );
+			$this->redirect('Channel/showInfo/' , array('pid' => $pid) );
 		}
 	}
 
