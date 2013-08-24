@@ -9,6 +9,34 @@
         <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script>
         <script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.js"></script>
 </head>
+<style type="text/css">
+table {
+    margin-top:15px;
+    margin-left:30px;
+    font-size:12px;
+    border-top:1px solid #999;
+    border-left:1px solid #999;
+    padding:0px;
+}
+
+
+table tr td {
+    padding:6px;
+    padding-right:0px;
+    border-right:1px solid #999;
+    border-bottom:1px solid #999;
+
+}
+
+table thead td{
+    background:#336d9b;
+    color:#fff;
+    margin:0px;
+}    
+.oddClm {
+    background-color: #5FC6DA;
+}
+</style>
 <script>
            var setting = {
                 data: {
@@ -39,7 +67,7 @@
                 v = nodes[0].name;
                 var cObj = $("#channel");
                 cObj.attr("value", v);
-                $("#pid").attr("value" , nodes[0].id);
+                $("#cid").attr("value" , nodes[0].id);
             }
     
             function showMenu() {
@@ -65,20 +93,40 @@
                 
                 
                 $("#pic").uploadify({
+                    'auto':false,
                     'buttonText' : '请选择文件',
                     'swf': '__PUBLIC__/uploadify/uploadify.swf',
-                    'uploader' : '__URL__/addProcess',
+                    'uploader' : '__URL__/getImage',
                     'button_image_url':'__APP__',
+                    'fileTypeExts' : '*.gif; *.jpg; *.png',
+                    'onUploadSuccess' : function(file, data, response) {
+                        var resp = "<tr><td><img src=__PUBLIC__/Upload/"+data + "  alt='无图片' /></td>";
+                        resp +="<td>是否推荐<input type='checkbox'  name='recommend' value='1'/></td><td>删除</td></tr>";
+                        $('#u_pic').append(resp);
+                    }
                 });
             });  
 </script>
 <body>
-	<form action="" method="get" >
-	   <label>商品名称:</label><input type="text" name="" id="" /><br/>
+	<form action="__URL__/addProcess" method="post" >
+	   <label>商品名称:</label><input type="text" name="name" id="" /><br/>
 	   <label>商品种类:</label><input type="text" name="" id="channel" /><br/>
-	   <input type="file" name="pic" id="pic" />
+	   <input type="hidden" name="cid" id="cid" value=""/>
+	   <input type="file" name="pic" id="pic" /><a href="#" onclick="javascript: $('#pic').uploadify('upload' , '*')">上传</a><br/>
 		<input type="submit" value="提交"/>
-	</form>
+	
+        <table width="580" cellspacing="0" cellPadding="0" class="listTable">
+            <thead>
+                <tr>
+                    <td>上传图片</td>
+                    <td>图片属性</td>
+                    <td>删除</td>
+                </tr>
+            </thead>
+            <tbody id="u_pic"></tbody>
+            <tfoot></tfoot>
+        </table>
+    </form>	
     <div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA">
         <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
     </div>
