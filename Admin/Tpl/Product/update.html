@@ -121,6 +121,7 @@ table thead td{
                                 $(col).parents("tr").remove();
                             });
                         });
+                        $.post()
                     }
                 });
                 
@@ -130,10 +131,7 @@ table thead td{
 <body>
 	<form action="__URL__/addProcess" method="post" >
 	   <label>商品名称:</label><input type="text" name="name" id="" /><br/>
-	   <label>商品种类:</label><input type="text"  id="channel" /><br/>
-	   <label>商品价格:</label><input type="text" name="price" id="price" /><br/>
-	   <label>商品存量:</label><input type="text" name="inventory" id="inventory" /><br/>
-	   <label>商品描述:</label><textarea name="decription" id="" cols="30" rows="10" ></textarea><br/>
+	   <label>商品种类:</label><input type="text" name="" id="channel" /><br/>
 	   <input type="hidden" name="cid" id="cid" value=""/>
 	   <div id="file_wrap">
 	   <input type="file" name="pic" id="pic" />

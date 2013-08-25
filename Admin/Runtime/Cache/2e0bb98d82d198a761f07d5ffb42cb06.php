@@ -1,18 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>商品添加</title>
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" />
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css">
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/uploadify.css" />
-        <script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script>
-</head>
-<style type="text/css">
-table {
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><title>商品添加</title><link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" /><link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css"><link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/uploadify.css" /><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script><script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.js"></script><script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script></head><style type="text/css">table {
     margin-top:15px;
     margin-left:30px;
     font-size:12px;
@@ -43,9 +29,7 @@ table thead td{
     width:500px;
     height:200px;
 }
-</style>
-<script>
-           var setting = {
+</style><script>           var setting = {
                 data: {
                     simpleData: {
                         enable: true,
@@ -60,7 +44,7 @@ table thead td{
                 }
             };
     
-            var zNodes ={$channel};
+            var zNodes =<?php echo ($channel); ?>;
             
 
             function beforeClick(treeId, treeNode) {
@@ -126,35 +110,4 @@ table thead td{
                 
                 
             });  
-</script>
-<body>
-	<form action="__URL__/addProcess" method="post" >
-	   <label>商品名称:</label><input type="text" name="name" id="" /><br/>
-	   <label>商品种类:</label><input type="text"  id="channel" /><br/>
-	   <label>商品价格:</label><input type="text" name="price" id="price" /><br/>
-	   <label>商品存量:</label><input type="text" name="inventory" id="inventory" /><br/>
-	   <label>商品描述:</label><textarea name="decription" id="" cols="30" rows="10" ></textarea><br/>
-	   <input type="hidden" name="cid" id="cid" value=""/>
-	   <div id="file_wrap">
-	   <input type="file" name="pic" id="pic" />
-	   </div>
-	   <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip'" onclick="javascript: $('#pic').uploadify('upload' , '*')">上传</a><br/>
-	
-        <table width="580" cellspacing="0" cellPadding="0" class="listTable">
-            <thead>
-                <tr>
-                    <td>上传图片</td>
-                    <td>图片属性</td>
-                    <td>删除</td>
-                </tr>
-            </thead>
-            <tbody id="u_pic"></tbody>
-            <tfoot></tfoot>
-        </table>
-       <input  type="submit" value="提交"/>
-    </form>	
-    <div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA">
-        <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
-    </div>
-</body>
-</html>
+</script><body><form action="__URL__/addProcess" method="post" ><label>商品名称:</label><input type="text" name="name" id="" /><br/><label>商品种类:</label><input type="text"  id="channel" /><br/><label>商品价格:</label><input type="text" name="price" id="price" /><br/><label>商品存量:</label><input type="text" name="inventory" id="inventory" /><br/><label>商品描述:</label><textarea name="decription" id="" cols="30" rows="10" ></textarea><br/><input type="hidden" name="cid" id="cid" value=""/><div id="file_wrap"><input type="file" name="pic" id="pic" /></div><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip'" onclick="javascript: $('#pic').uploadify('upload' , '*')">上传</a><br/><table width="580" cellspacing="0" cellPadding="0" class="listTable"><thead><tr><td>上传图片</td><td>图片属性</td><td>删除</td></tr></thead><tbody id="u_pic"></tbody><tfoot></tfoot></table><input  type="submit" value="提交"/></form><div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>

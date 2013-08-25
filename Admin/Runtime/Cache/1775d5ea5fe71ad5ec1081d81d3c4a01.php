@@ -1,16 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-	<title>Document</title>
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css">
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" />
-        <script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script>
-</head>
-<script>
-           var setting = {
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><title>Document</title><link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css"><link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" /><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script><script type="text/javascript">    	   var setting = {
                 data: {
                     simpleData: {
                         enable: true,
@@ -24,9 +12,8 @@
                 }
             };
     
-            var zNodes ={$channel};
+            var zNodes =<?php echo ($channel); ?>;
             
-
             
             function onClick(e, treeId, treeNode) {
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
@@ -58,17 +45,4 @@
                 t.expandAll(true);
                 $("#channel").click(showMenu );
             });
-</script>
-<body>
-	<form action="__URL__/updateProcess/id/{$data.id}" method="post">
-	    <input type="text" name="name" value="{$data.name}" ><br/>
-	    <input type="text" name="pname" readonly="readonly" id="channel" value="{$pname}"><br/>
-	    <input type="hidden" name="pid" value="{$data.pid}" id="pid" />
-	    <input type="submit" value="修改" />
-    </form>
-
-    <div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA">
-        <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
-    </div>
-</body>
-</html>
+    	</script></head><body><form action="__URL__/addProcess" method="post"><label for="">添加名字</label><input type="text" name="name" id="" /><br/><label for="">选择种类</label><input type="text" readonly="readonly" name="pname" id="channel" />&nbsp;<input type="hidden" id = "pid" name="pid" value="" /><input type="submit" id="ss" value="提交"  /></form><div id="menuContent" class="menuContent" style="display:none; position: absolute;z-index: 999"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>
