@@ -24,7 +24,7 @@
 
                 });
                 
-                
+                $(".updatebtn").linkbutton({iconCls:'icon-edit'})
                  
              });
         });
@@ -72,7 +72,7 @@ table thead td{
                        <tr>
                            <td>{$v.name}</td>
                            <td>{$v.price}</td>
-                           <td><a href="__URL__/delete/pid/{$v.id}" class="delbtn" >删除</a></td>
+                           <td><a  href="__URL__/update/pid/{$v.id}" class = "updatebtn">更新</a>&nbsp;&nbsp;<a href="__URL__/delete/pid/{$v.id}" class="delbtn" >删除</a></td>
                        </tr>
                    </volist>        	    
         	</tbody>

@@ -69,8 +69,8 @@ table thead td{
                 return check;
             }           
             function onClick(e, treeId, treeNode) {
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-                nodes = zTree.getSelectedNodes(),
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                nodes = zTree.getSelectedNodes();
                 v = nodes[0].name;
                 var cObj = $("#channel");
                 cObj.attr("value", v);

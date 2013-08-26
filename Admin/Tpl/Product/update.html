@@ -61,20 +61,21 @@ table thead td{
             };
     
             var zNodes ={$channel};
-            
-
+            var pro_id = {$product['cid']};
+            var nodes;
             function beforeClick(treeId, treeNode) {
                 var check = (treeNode && !treeNode.isParent);
                 if (!check) alert("只能选择种类...");
                 return check;
             }           
             function onClick(e, treeId, treeNode) {
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-                nodes = zTree.getSelectedNodes(),
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                nodes = zTree.getSelectedNodes();
                 v = nodes[0].name;
                 var cObj = $("#channel");
                 cObj.attr("value", v);
-                $("#cid").attr("value" , nodes[0].id);
+                // $("#cid").attr("value" , nodes[0].id);
+                $("#cid").val(nodes[0].id);
             }
     
             function showMenu() {
@@ -95,10 +96,15 @@ table thead td{
             } 
              $(function(){
                 easyloader.theme="bootstrap";
+                
                 var t = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
                 t.expandAll(true);
                 $("#channel").click(showMenu );
                 
+                var tree = $.fn.zTree.getZTreeObj("treeDemo");
+                node = tree.getNodeByParam('id' , pro_id , null);
+                $("#channel").attr("value",node['name']);
+                $("cid").attr("value" , node['id']);
                 
                 $("#pic").uploadify({
                     'auto':false,
@@ -113,26 +119,35 @@ table thead td{
                         resp +="<td><a href='#' class='delbtn' >删除</a></td></tr>";
 
                         $('#u_pic').append(resp);
+                        $(".delbtn").linkbutton({iconCls: 'icon-cancel'});
+
+                    }
+                });
+                
+                using(['linkbutton'] ,function(){
                         $(".delbtn").linkbutton({
                             iconCls: 'icon-cancel'
                         }).click(function(){
                             var col = this;
+                             if(!confirm("该操作不可逆,是否确认删除!")) {
+                                return false;
+                            }
                             $.post('__URL__/delPic' , {'pic': data} ,function(r){
                                 $(col).parents("tr").remove();
                             });
-                        });
-                        $.post()
-                    }
-                });
-                
+
+                        });                    
+                } );
+
                 
             });  
 </script>
 <body>
-	<form action="__URL__/addProcess" method="post" >
-	   <label>商品名称:</label><input type="text" name="name" id="" /><br/>
-	   <label>商品种类:</label><input type="text" name="" id="channel" /><br/>
-	   <input type="hidden" name="cid" id="cid" value=""/>
+	<form action="__URL__/updateProcess" method="post" >
+	    <input type="hidden" name="id" value="{$product.id}" />
+	   <label>商品名称:</label><input type="text" name="name" value="{$product.name}" /><br/>
+	   <label>商品种类:</label><input type="text" name="" value="" id="channel" /><br/>
+	   <input type="hidden" name="cid" id="cid" value="{$product.cid}"/>
 	   <div id="file_wrap">
 	   <input type="file" name="pic" id="pic" />
 	   </div>
@@ -146,7 +161,15 @@ table thead td{
                     <td>删除</td>
                 </tr>
             </thead>
-            <tbody id="u_pic"></tbody>
+            <tbody id="u_pic">
+                <volist name="product.pic" id='p' >
+                <tr>
+                	<td><img src="__PUBLIC__/Upload/Thumb/s_{$p.path}" alt="无图片" /></td>
+                	<td></td>
+                	<td><a href='__URL__/delExistPic/pid/{$p.id}' class='delbtn' >删除</a></td></td>
+                </tr>
+                </volist>
+            </tbody>
             <tfoot></tfoot>
         </table>
        <input  type="submit" value="提交"/>

@@ -44,6 +44,10 @@
 			}
 			
 		}
+		
+		/**
+		 * 添加商品处理
+		 */
 		public function addProcess() {
 			$product_db = M("Product");
 			$pic_db = M("Picture");
@@ -65,8 +69,23 @@
 		 * 更新文件
 		 */
 		public function update($pid = 0) {
+			$db = M("Channel");
+			$data = $db->select();
+			$this->assign('channel' , json_encode($data));
+						
+			$product = array();
+			$db_pro = M("Product");
+			$db_pic = M("Picture");
+			$pro = $db_pro->where('id='.$pid)->find();
+			$pic = $db_pic->where('product_id='.$pid)->select();
 			
+			$product=$pro;
+			$product['pic'] = $pic;
+			
+			$this->assign('product' ,$product);
+			$this->display();
 		}
+		
 		/**
 		 * 删除商品以及图片
 		 */
@@ -74,7 +93,6 @@
 			$pro_db = M("Product");
 			$pic_db = M("Picture");
 			$pic = $pic_db->where('product_id='.$pid)->field('path')->select();
-			dump($pic);
 			foreach ($pic as $p) {
 				unlink("./Public/Upload/".$p['path']);
 				unlink("./Public/Upload/Thumb/s_".$p['path']);
@@ -96,6 +114,57 @@
 				}
 			}
 		}
+		
+		/**
+		 * 删除已经存在的图片
+		 */
+		public function delExistPic($pid = 0) {
+			$db = M("Picture");
+			$pic = $db->where("id=".$pid)->find();
+			if(file_exists("./Public/Upload/".$pic['path'])) {
+				unlink("./Public/Upload/".$pic['path']);
+				if (file_exists("./Public/Upload/Thumb/s_".$pic['path'])) {
+					unlink("./Public/Upload/Thumb/s_".$pic['path']);
+				}
+			
+			}
+			$db->where('id='.$pid)->delete();
+			$this->redirect("update" , array("pid"=>$pic['product_id']));
+		}
+		/**
+		 * 按品种显示
+		 */
+		public function showByChannel($cid = 0) {
+			$db_pro = M("Product");
+			$db = M("Channel");
+			$tree = $db->select();	
+			$product = array();
+			if (0==$cid) {
+				$product = $db_pro->select();
+			} else {
+				$product = $db_pro->where('cid ='.$cid)->select();
+			}
+			$this->assign("product" , $product);
+			$this->display();
+		}
+		
+		/**
+		 * 处理更新
+		 */
+		public function updateProcess() {
+			$db_pro = M("Product");
+			$db_pic = M("Picture");
+			
+			$product = $_POST;
+			$db_pro->where('id='.$product['id'])->save($product);
+			foreach ($product['path'] as $p) {
+				$data['path'] = $p;
+				$data['product_id'] = $product['id'];
+				$db_pic->add($data);
+			}
+			
+		}
+		
 		
 		
 	}

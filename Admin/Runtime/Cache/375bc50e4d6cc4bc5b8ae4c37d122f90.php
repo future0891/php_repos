@@ -11,7 +11,7 @@
 
                 });
                 
-                
+                $(".updatebtn").linkbutton({iconCls:'icon-edit'})
                  
              });
         });
@@ -42,4 +42,4 @@ table thead td{
 .oddClm {
     background-color: #5FC6DA;
 }
-</style><body><table width="580" cellspacing="0" cellPadding="0" class="listTable"><thead><tr><td>商品名称</td><td>商品价格</td><td>操作</td></tr></thead><tbody><?php if(is_array($product)): $i = 0; $__LIST__ = $product;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><tr><td><?php echo ($v["name"]); ?></td><td><?php echo ($v["price"]); ?></td><td><a href="__URL__/delete/pid/<?php echo ($v["id"]); ?>" class="delbtn" >删除</a></td></tr><?php endforeach; endif; else: echo "" ;endif; ?></tbody><tfoot></tfoot></table></body></html>
+</style><body><table width="580" cellspacing="0" cellPadding="0" class="listTable"><thead><tr><td>商品名称</td><td>商品价格</td><td>操作</td></tr></thead><tbody><?php if(is_array($product)): $i = 0; $__LIST__ = $product;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i;?><tr><td><?php echo ($v["name"]); ?></td><td><?php echo ($v["price"]); ?></td><td><a  href="__URL__/update/pid/<?php echo ($v["id"]); ?>" class = "updatebtn">更新</a>&nbsp;&nbsp;<a href="__URL__/delete/pid/<?php echo ($v["id"]); ?>" class="delbtn" >删除</a></td></tr><?php endforeach; endif; else: echo "" ;endif; ?></tbody><tfoot></tfoot></table></body></html>

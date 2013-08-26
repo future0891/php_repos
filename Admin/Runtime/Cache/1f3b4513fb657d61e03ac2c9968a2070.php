@@ -45,8 +45,8 @@ table thead td{
             };
     
             var zNodes =<?php echo ($channel); ?>;
-            
-
+            var pro_id = <?php echo ($product['cid']); ?>;
+            var nodes;
             function beforeClick(treeId, treeNode) {
                 var check = (treeNode && !treeNode.isParent);
                 if (!check) alert("只能选择种类...");
@@ -58,7 +58,8 @@ table thead td{
                 v = nodes[0].name;
                 var cObj = $("#channel");
                 cObj.attr("value", v);
-                $("#cid").attr("value" , nodes[0].id);
+                // $("#cid").attr("value" , nodes[0].id);
+                $("#cid").val(nodes[0].id);
             }
     
             function showMenu() {
@@ -79,10 +80,15 @@ table thead td{
             } 
              $(function(){
                 easyloader.theme="bootstrap";
+                
                 var t = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
                 t.expandAll(true);
                 $("#channel").click(showMenu );
                 
+                var tree = $.fn.zTree.getZTreeObj("treeDemo");
+                node = tree.getNodeByParam('id' , pro_id , null);
+                $("#channel").attr("value",node['name']);
+                $("cid").attr("value" , node['id']);
                 
                 $("#pic").uploadify({
                     'auto':false,
@@ -97,17 +103,26 @@ table thead td{
                         resp +="<td><a href='#' class='delbtn' >删除</a></td></tr>";
 
                         $('#u_pic').append(resp);
+                        $(".delbtn").linkbutton({iconCls: 'icon-cancel'});
+
+                    }
+                });
+                
+                using(['linkbutton'] ,function(){
                         $(".delbtn").linkbutton({
                             iconCls: 'icon-cancel'
                         }).click(function(){
                             var col = this;
+                             if(!confirm("该操作不可逆,是否确认删除!")) {
+                                return false;
+                            }
                             $.post('__URL__/delPic' , {'pic': data} ,function(r){
                                 $(col).parents("tr").remove();
                             });
-                        });
-                    }
-                });
-                
+
+                        });                    
+                } );
+
                 
             });  
-</script><body><form action="__URL__/addProcess" method="post" ><label>商品名称:</label><input type="text" name="name" id="" /><br/><label>商品种类:</label><input type="text"  id="channel" /><br/><label>商品价格:</label><input type="text" name="price" id="price" /><br/><label>商品存量:</label><input type="text" name="inventory" id="inventory" /><br/><label>商品描述:</label><textarea name="decription" id="" cols="30" rows="10" ></textarea><br/><input type="hidden" name="cid" id="cid" value=""/><div id="file_wrap"><input type="file" name="pic" id="pic" /></div><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip'" onclick="javascript: $('#pic').uploadify('upload' , '*')">上传</a><br/><table width="580" cellspacing="0" cellPadding="0" class="listTable"><thead><tr><td>上传图片</td><td>图片属性</td><td>删除</td></tr></thead><tbody id="u_pic"></tbody><tfoot></tfoot></table><input  type="submit" value="提交"/></form><div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>
+</script><body><form action="__URL__/updateProcess" method="post" ><input type="hidden" name="id" value="<?php echo ($product["id"]); ?>" /><label>商品名称:</label><input type="text" name="name" value="<?php echo ($product["name"]); ?>" /><br/><label>商品种类:</label><input type="text" name="" value="" id="channel" /><br/><input type="hidden" name="cid" id="cid" value="<?php echo ($product["cid"]); ?>"/><div id="file_wrap"><input type="file" name="pic" id="pic" /></div><a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip'" onclick="javascript: $('#pic').uploadify('upload' , '*')">上传</a><br/><table width="580" cellspacing="0" cellPadding="0" class="listTable"><thead><tr><td>上传图片</td><td>图片属性</td><td>删除</td></tr></thead><tbody id="u_pic"><?php if(is_array($product["pic"])): $i = 0; $__LIST__ = $product["pic"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$p): $mod = ($i % 2 );++$i;?><tr><td><img src="__PUBLIC__/Upload/Thumb/s_<?php echo ($p["path"]); ?>" alt="无图片" /></td><td></td><td><a href='__URL__/delExistPic/pid/<?php echo ($p["id"]); ?>' class='delbtn' >删除</a></td></td></tr><?php endforeach; endif; else: echo "" ;endif; ?></tbody><tfoot></tfoot></table><input  type="submit" value="提交"/></form><div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>
