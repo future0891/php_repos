@@ -166,6 +166,16 @@
 		}
 		
 		
+		public function productSort() {
+			$sort = $_POST['sort'];
+			$db = M("Product");
+			foreach ($sort as $k => $p) {
+				$db->where("id=".$p)->setField("sort", ++$k);
+			}
+			echo "排序成功";
+		}
+		
+		
 		
 	}
 ?>

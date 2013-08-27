@@ -1,8 +1,71 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><title>Document</title></head><link type="text/css" rel="stylesheet" href="__PUBLIC__/jquery-ui/themes/base/jquery-ui.css" /><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.core.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.widget.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.mouse.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.sortable.js"></script><script type="text/javascript">    $(function() {
-        $( "tbody" ).sortable({
-            placeholder: "ui-state-highlight"
-        });
-        $( "#sortable" ).disableSelection();       
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"><html lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><title>Document</title></head><link type="text/css" rel="stylesheet" href="__PUBLIC__/jquery-ui/themes/base/jquery-ui.css" /><link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css"><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.core.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.widget.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.mouse.js"></script><script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.sortable.js"></script><script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script><script type="text/javascript" src="__PUBLIC__/Js/admin.js"></script><script type="text/javascript">    $(function() {
+        easyloader.theme = "bootstrap";
+        // var _isSort =false;
+        
+        $(".listTable").shopsort({url:"__URL__/productSort"});
+        // $( "tbody" ).sortable({
+                // placeholder: "ui-state-highlight",
+                // axis:"y",
+                // cursor: "move",
+                // helper:function(e ,element) {
+                    // var _original = element.children();
+                    // var _helper = element.clone();
+                    // _helper.children().each(function(index) {
+                        // $(this).width(_original.eq(index).width());
+                    // });
+                    // return _helper;
+                // },
+                // update:function(e , ui) {
+                    // setOrder();
+                // }
+            // });
+        // $( "tbody" ).sortable("disable");
+//         
+        // $("#startSort").click(function() {
+            // if(!_isSort) {
+                // $( "tbody" ).sortable("enable");   
+                // $(this).linkbutton({disabled:true});
+                // $("#stopSort").linkbutton({disabled:false});
+                // $(".listTable thead tr").append("<td>顺序</td>");
+                // setOrder();
+                // $(".listTable tfoot tr").append("<td>拖动行开始排序</td>");
+                // _isSort  = true;
+                // } else {
+                    // return false;
+                // }
+        // });
+//         
+        // $("#stopSort").click(function(){
+            // if (_isSort) {
+                // var id_Arr = $( "tbody" ).sortable("toArray");
+                // $(this).linkbutton({disabled:true});
+                // $( "tbody" ).sortable("disable");
+                // $("#startSort").linkbutton({disabled:false});
+                // $(".listTable").find("tr").each(function(index){
+                    // $(this).children().last().remove();
+                // });
+//                 
+                // $.post("__URL__/productSort", {"sort":id_Arr},function(data){
+                    // alert(data);
+                // });
+                // _isSort = false;
+            // } else {
+                // return false;
+            // }
+//             
+        // });
+//         
+        // function setOrder() {
+            // $(".listTable tbody tr").each(function(index){
+                // if(_isSort) {
+                    // $(this).find("td:last").html((index+1));
+                // } else {
+                    // $(this).append("<td>"+(index+1)+"</td>");
+                // }
+//                 
+            // });
+        // }
+        
     })
     
 </script><style type="text/css">table {
@@ -31,4 +94,4 @@ table thead td{
 .oddClm {
     background-color: #5FC6DA;
 }
-</style><body><table width="580" cellspacing="0" cellPadding="0" class="listTable"><thead><tr><td>id</td><td>图片</td><td>操作</td></tr></thead><tbody><?php if(is_array($product)): $i = 0; $__LIST__ = $product;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$p): $mod = ($i % 2 );++$i;?><tr><td><?php echo ($p["id"]); ?></td><td><?php echo ($p["name"]); ?></td><td><?php echo ($p["inventory"]); ?></td></tr><?php endforeach; endif; else: echo "" ;endif; if(empty($product)): ?><tr><td colspan="3">没有数据</td></tr><?php endif; ?></tbody><tfoot></tfoot></table></body></html>
+</style><body><table width="580" cellspacing="0" cellPadding="0" class="listTable"><thead><tr><td>id</td><td>图片</td><td>库存</td></tr></thead><tbody><?php if(is_array($product)): $i = 0; $__LIST__ = $product;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$p): $mod = ($i % 2 );++$i;?><tr id="<?php echo ($p["id"]); ?>"><td><?php echo ($p["id"]); ?></td><td><?php echo ($p["name"]); ?></td><td><?php echo ($p["inventory"]); ?></td></tr><?php endforeach; endif; else: echo "" ;endif; if(empty($product)): ?><tr><td colspan="3">没有数据</td></tr><?php endif; ?></tbody><tfoot><tr><td colspan="3"><a href="#" id="startSort" class="easyui-linkbutton"  data-options="iconCls:'icon-ok'">开始排序</a>&nbsp;<a href="#" class="easyui-linkbutton"  data-options="iconCls:'icon-save',disabled:true" id="stopSort">结束保存</a>&nbsp;</td></tr></tfoot></table></body></html>
