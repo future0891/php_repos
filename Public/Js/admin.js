@@ -1,5 +1,6 @@
 (function($){
 	
+	//排序插件
 	$.fn.shopsort = function(opts){
 	     var _isSort =false;
 	     var sortElement = $(this).find("tbody");
@@ -26,7 +27,7 @@
             });
         sortElement.sortable("disable");
         
-        $("#startSort").click(function() {
+        $("#startSort").on("click",function() {
             if(!_isSort) {
                 sortElement.sortable("enable");   
                 $(this).linkbutton({disabled:true});
@@ -40,7 +41,7 @@
                 }
         });
         
-        $("#stopSort").click(function(){
+        $("#stopSort").on("click",function(){
             if (_isSort) {
                 var id_Arr = $( "tbody" ).sortable("toArray");
                 $(this).linkbutton({disabled:true});
@@ -72,6 +73,80 @@
         }
         return sortElement;		
 	}
+	
+	//固定的树插件
+	$.fn.shoptree = function(opts) {
+           var settings =$.extend({
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pid",
+                        root:-1
+                    }
+                },
+                callback: {
+                    beforeClick:beforeClick,
+                    onClick:showWhat
+                },
+                nodes:"",
+                showChannel:false,
+                redirect:false
+            } , opts||{});
+            function beforeClick(treeId, treeNode) {
+                var check = (treeNode && !treeNode.isParent);
+                if(settings.showChannel)
+                    check = (treeNode && treeNode.isParent);
+                if (!check) {
+                	if(!settings.showChannel)
+                	{
+                		alert("只能选择商品...");
+                	} else {
+                		alert("只能选择品种");
+                	}
+                }
+                return check;
+            }
+            
+	       var showWhat;
+           if(!settings.redirect) {
+           		showWhat = onClick;
+           } else {
+           		showWhat = function(){alert("ttt")};
+           }
+                       
+            var zNodes =settings.nodes;
+            
+			var tree = this;
+         	var t = $.fn.zTree.init($(tree), settings, zNodes);
+         	return t;
+	}
 
         
 })(jQuery)
+      function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            nodes = zTree.getSelectedNodes();
+            v = nodes[0].name;
+            var cObj = $("#channel");
+            cObj.attr("value", v);
+            $("#cid").attr("value" , nodes[0].id);
+        }
+	
+        function showMenu() {
+            var cObj = $("#channel");
+            var cOffset = $("#channel").offset();
+            $("#menuContent").css({left:cOffset.left + "px", top:cOffset.top + cObj.outerHeight() + "px"}).slideDown("fast");
+            $("body").bind("mousedown", onBodyDown);
+
+        }
+        function hideMenu() {
+            $("#menuContent").fadeOut("fast");
+            $("body").unbind("mousedown", onBodyDown);
+        }
+        function onBodyDown(event) {
+            if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length>0)) {
+                hideMenu();
+            }
+        }    
+	//插件方法结束

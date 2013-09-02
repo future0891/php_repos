@@ -144,6 +144,34 @@
 			} else {
 				$product = $db_pro->where('cid ='.$cid)->select();
 			}
+				
+			$data = $db->select();
+			$pids = $db->getField("pid" , true);
+			if (in_array($cid, $haystack)) {
+				
+			}
+			foreach ($data as $k => $p) {
+				if( in_array($p['id'], $pids) ) {
+					$temp[$k] =array_merge( $data[$k] , array("url"=>"__URL__/showByChannel/pid/".$p['id'] , "target"=>"_self" ));
+				} else {
+					$temp[$k] =$data[$k];
+				}
+			}
+			$this->assign('channel' , json_encode($temp));
+			$this->assign("product" , $product);
+			$this->display();
+		}
+		
+		public function showSortProduct(){
+			$db_pro = M("Product");
+			$db = M("Channel");
+			$tree = $db->select();	
+			$product = array();
+			if (0==$cid) {
+				$product = $db_pro->select();
+			} else {
+				$product = $db_pro->where('cid ='.$cid)->select();
+			}
 			$this->assign("product" , $product);
 			$this->display();
 		}
