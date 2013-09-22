@@ -5,8 +5,8 @@
 	<title>品种排序</title>
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" />
 <link type="text/css" rel="stylesheet" href="__PUBLIC__/jquery-ui/themes/base/jquery-ui.css" />
-<link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" />
 <link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css">
+<link rel="stylesheet" href="__PUBLIC__/Css/table.css" />
 <script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/jquery-ui/ui/jquery.ui.core.js"></script>
@@ -18,56 +18,48 @@
 <script type="text/javascript">
     $(function(){
         easyloader.theme = "bootstrap";
-        using(['pannel' , 'linkbutton'] , function(){
-            $(".icon-reload").on("click" , function(){
-        });
-        });
-
+        
+        var zNodes = {$channel};
+        var settings = {
+                data: {
+                    simpleData: {
+                        enable: true,
+                        idKey: "id",
+                        pIdKey: "pid",
+                        rootPId: -1
+                    }
+                },
+               callback: {
+                    onClick:changeChannel,
+               }
+                
+            };
+       $.fn.zTree.init($("#tree") , settings , zNodes);
+        
+        var tree;
+        function changeChannel() {
+            tree = $.fn.zTree.getZTreeObj("tree");
+            node = tree.getSelectedNodes();
+            $("#content").panel('refresh' , "__URL__/showByChannel/cid/"+node[0].id);
+        };
+        
          $(".easyui-panel").ajaxSuccess(function() {
              $(".listTable").shopsort({url:"__URL__/productSort"});
          });
         
     });
 </script>
-<style type="text/css">
-table {
-    margin-top:15px;
-    margin-left:30px;
-    font-size:12px;
-    border-top:1px solid #999;
-    border-left:1px solid #999;
-    padding:0px;
-}
-
-
-table tr td {
-    padding:6px;
-    padding-right:0px;
-    border-right:1px solid #999;
-    border-bottom:1px solid #999;
-
-}
-
-table thead td{
-    background:#336d9b;
-    color:#fff;
-    margin:0px;
-}    
-.oddClm {
-    background-color: #5FC6DA;
-}
-</style>
 
 </head>
 <body>
 	
 
-    <div class="easyui-panel" title="Nested Panel" style="width:800px;height:600px;padding:10px;">
+    <div class="easyui-panel" title="Nested Panel" style="width:1024px;height:600px;padding:10px;">
         <div class="easyui-layout" data-options="fit:true">
-            <div data-options="region:'west',split:true" style="width:100px;padding:10px">
-                Left Content
+            <div data-options="region:'west',split:true" style="width:200px;padding:10px">
+                <ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul>
             </div>
-            <div id="content" data-options="region:'center' ,href:'__URL__/showByChannel'," style="padding:10px">
+            <div id="content" data-options="region:'center' " style="padding:10px">
 
             </div>
         </div>

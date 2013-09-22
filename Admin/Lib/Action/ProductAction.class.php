@@ -3,13 +3,50 @@
 		public function index() {
 			echo "1";
 		}
+		
+		
+		
 		public function showList() {
 			$db = M('Product');
-			$prodcut = $db->select();
+			
+			import("ORG.Util.Page");
+			$count = $db->count();
+			$Page = new Page($count , 22);
+			$prodcut = $db->query("select pr.* , ch.name cname from t_product pr LEFT JOIN t_channel ch on pr.cid = ch.id limit ".$Page->firstRow." ," . $Page->listRows);
+			$show = $Page->show();
 			$this->assign('product' , $prodcut);
+			$this->assign('pager' , $show);
 			$this->display();
 		}
+		/**
+		 * 按品种查看商品,选择操作
+		 */
+		public function showListByChannel($cid = 0) {
+			$db = M("Channel");
+			$db_pro = M("Product");
+			$channel = $db->select();
+			
+			$this->assign("channel" , json_encode($channel));
+			$this->display();
+			
+		}
 		
+		/**
+		 * 显示可操作的商品列表
+		 */
+		public function showOptList($cid = 0) {
+			$db = M("Product");
+			import("ORG.Util.Page");
+			$count = $db->where("cid = ".$cid)->count();
+			$page = new Page($count , 15);
+			$product = $db->where("cid = ".$cid)->limit($page->firstRow.','.$page->listRows)->select();
+			$this->assign("data" , $product);
+			$this->display();			
+		}
+		
+		/**
+		 * 添加商品
+		 */
 		public function add() {
 			$db = M("Channel");
 			$data = $db->select();
@@ -51,15 +88,21 @@
 		public function addProcess() {
 			$product_db = M("Product");
 			$pic_db = M("Picture");
+			$attr_db = M("Product_attribute");
 			$product_db->name = $_POST['name'];
 			$product_db->cid = $_POST['cid'];
-			$product_db->inventory = $_POST['inventory'];
 			$product_db->description = $_POST['description'];
 			$product_db->price = $_POST['price'];			
 			$p_id = $product_db->add();
-			foreach ($_POST['path'] as $p) {
+			$attr_db->inventory = $_POST['inventory'];
+			$attr_db->size = $_POST['p_size'];
+			$attr_db->product_id = $p_id;
+			$attr_db->add();
+			foreach ($_POST['path'] as $k=> $p) {
 				$pic_db->path = $p;
 				$pic_db->product_id = $p_id ;
+				$pic_db->recommend = $_POST['recommend'][$k];
+				if($_POST['recommend'][$k] == null) $pic_db->recommend = 0;
 				$pic_db->add();
 			}
 			$this->redirect("add");
@@ -99,7 +142,7 @@
 			}
 			$pro_db->where('id='.$pid)->delete();
 			$pic_db->where('product_id='.$pid)->delete();
-			$this->redirect('showList');
+			$this->redirect('showListByChannel');
 		}
 		/**
 		 * Ajax 处理删除文件
@@ -129,7 +172,8 @@
 			
 			}
 			$db->where('id='.$pid)->delete();
-			$this->redirect("update" , array("pid"=>$pic['product_id']));
+			// $this->redirect("update" , array("pid"=>$pic['product_id']));
+			$this->redirect("showListByChannel");
 		}
 		/**
 		 * 按品种显示
@@ -142,7 +186,8 @@
 			if (0==$cid) {
 				$product = $db_pro->select();
 			} else {
-				$product = $db_pro->where('cid ='.$cid)->select();
+				$model = new Model();
+				$product = $model->query("select pr.* , pa.inventory from t_product pr left join t_product_attribute pa on pr.id = pa.product_id where pr.cid = ".$cid);
 			}
 				
 			$data = $db->select();
@@ -162,6 +207,9 @@
 			$this->display();
 		}
 		
+		/**
+		 * 排序商品列表
+		 */
 		public function showSortProduct(){
 			$db_pro = M("Product");
 			$db = M("Channel");
@@ -170,12 +218,27 @@
 			if (0==$cid) {
 				$product = $db_pro->select();
 			} else {
-				$product = $db_pro->where('cid ='.$cid)->select();
+				// $product = $db_pro->where('cid ='.$cid)->select();
+				$model = new Model();
+				$product = $model->query("select pr.* , pa.inventory from t_product pr left join t_product_attribute pa on pr.id = pa.product_id where pr.cid = ".$cid);
 			}
 			$this->assign("product" , $product);
+			$this->assign("channel" , json_encode($tree) );
 			$this->display();
 		}
-		
+
+		/**
+		 * 商品排序
+		 */
+		public function productSort() {
+			$sort = $_POST['sort'];
+			$db = M("Product");
+			$attr = M("Product_attribute");
+			foreach ($sort as $k => $p) {
+				$db->where("id=".$p)->setField("sort", ++$k);
+			}
+			echo "排序成功";
+		}		
 		/**
 		 * 处理更新
 		 */
@@ -190,20 +253,12 @@
 				$data['product_id'] = $product['id'];
 				$db_pic->add($data);
 			}
-			
+			$this->redirect("showListByChannel");
 		}
 		
+
 		
-		public function productSort() {
-			$sort = $_POST['sort'];
-			$db = M("Product");
-			foreach ($sort as $k => $p) {
-				$db->where("id=".$p)->setField("sort", ++$k);
-			}
-			echo "排序成功";
-		}
-		
-		
+
 		
 	}
 ?>

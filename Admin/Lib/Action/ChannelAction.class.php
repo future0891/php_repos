@@ -1,5 +1,21 @@
 <?php
 	class ChannelAction extends Action {
+
+		public function showChannel() {
+			$db = M("Channel");
+			$data = $db->select();
+			$this->assign("channel" , json_encode($data));
+			$pid = $this->_param('pid');
+			if($pid == null) $pid = 0;
+			$this->assign('pid' , $pid);
+			$this->display();
+		}
+		public function channelInfo() {
+			$db = M("Channel");
+			$data = $db->select();
+			echo json_encode($data);
+		}		
+	
 		public function add() {
 			$this->assign('channel' , $this->genTree());
 			$this->display();
@@ -15,7 +31,7 @@
 			if($db->create()) {
 				$db->add();
 			}
-			$this->redirect('add');
+			$this->redirect('showChannel');
 		}
 		
 		public function showInfo($pid=0) {
@@ -44,10 +60,12 @@
 				}
 			$pid = $db->where("id=".$id)->getField('pid');
 			}
-			$this->redirect('Channel/showInfo/' , array('pid' => $pid) );
+			$this->redirect('showInfo' , array('pid' => $pid) );
 		}
-		public function delete($id = -1) {
-			if(-1!=$id) {
+		
+		public function delete() {
+			$id = $this->_param("id");
+			if(0 !=$id) {
 				$db = M("Channel");
 				$pid = $db->where('id='.$id)->getField('pid');
 				$db->where('id='.$id)->delete();
@@ -55,8 +73,9 @@
 			if($pid ==null) {
 				$pid = 0;
 			}
-			$this->redirect('Channel/showInfo/' , array('pid' => $pid) );
+			$this->redirect('showChannel',array("pid"=>$pid) );
 		}
+		
 	}
 
 ?>

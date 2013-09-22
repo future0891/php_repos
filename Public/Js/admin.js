@@ -34,7 +34,7 @@
                 $("#stopSort").linkbutton({disabled:false});
                 $(".listTable thead tr").append("<td>顺序</td>");
                 setOrder();
-                $(".listTable tfoot tr").append("<td>拖动行开始排序</td>");
+                $(".listTable tfoot tr").append("<td id='notice'>拖动行开始排序</td>");
                 _isSort  = true;
                 } else {
                     return false;
@@ -47,12 +47,20 @@
                 $(this).linkbutton({disabled:true});
                 sortElement.sortable("disable");
                 $("#startSort").linkbutton({disabled:false});
-                $(_col).find("tr").each(function(index){
+                var addIndex = function(){
+                	$(_col).find("tr").each(function(index){
                     $(this).children().last().remove();
-                });
+                	});
+                };
                 
                 $.post(settings.url, {"sort":id_Arr},function(data){
+                	//清楚添加的行
+                	addIndex();
                     alert(data);
+                    //取消表格的左后一行,不然 重新开始由于两次ajax事件,会产生多个 td
+                    $("#startSort").off();
+                });
+                $(".listTable").ajaxStart(function(){
                 });
                 _isSort = false;
             } else {
@@ -87,7 +95,7 @@
                 },
                 callback: {
                     beforeClick:beforeClick,
-                    onClick:showWhat
+                    // onClick:showWhat
                 },
                 nodes:"",
                 showChannel:false,
@@ -108,12 +116,12 @@
                 return check;
             }
             
-	       var showWhat;
-           if(!settings.redirect) {
-           		showWhat = onClick;
-           } else {
-           		showWhat = function(){alert("ttt")};
-           }
+	       // var showWhat;
+           // if(!settings.redirect) {
+           		// showWhat = onClick;
+           // } else {
+           		// showWhat = function(){alert("ttt")};
+           // }
                        
             var zNodes =settings.nodes;
             

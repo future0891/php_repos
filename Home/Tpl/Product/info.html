@@ -5,20 +5,24 @@
             <div id ="product_box_bg">
                 <div id="product_icon"></div>
                 <br class="clear">
-                <div id="product_img"></div>
+                <div id="product_img">
+                    <volist name="pic" id='p'>
+                    <img src="__PUBLIC__/Upload/Thumb/s_{$p['path']}" alt="无图" /><br>
+                    </volist>
+                </div>
                 
              <div id ="product_info">
              <div id = "product_info_title">商品标题</div>
              <br class="clear">
                 <dl>               
                     <dt>商品名称：</dt>
-                    <dd>玩具</dd>
+                    <dd>{$product.name}</dd>
                     <br class="clear">
                     <dt>商品价格：</dt>
-                    <dd>177</dd>
+                    <dd>{$product.price}</dd>
                     <br class="clear">
                     <dt>商品介绍：</dt>
-                    <dd>这里是介绍</dd>
+                    <dd>{$product.description}</dd>
                     <br class="clear">
                 </dl>
             </div>
@@ -29,3 +33,7 @@
             <div id ="product_box_right"></div>
         </div>
     <!-- 产品模块结束 -->
+    <div style="width:635px;height: 500px; background-color: red;margin-top: 5px;float:left "></div>
+    
+   </div>
+    <!--主体第一部分结束-->
