@@ -23,7 +23,7 @@
                 },
                 async:{
                     enable:true,
-                    url:'__URL__/channelInfo',
+                    url:"<?php echo U('Channel/channelInfo');?>",
                 },
                callback: {
                     onClick:showframe,
