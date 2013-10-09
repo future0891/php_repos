@@ -40,11 +40,12 @@
         function changeChannel() {
             tree = $.fn.zTree.getZTreeObj("tree");
             node = tree.getSelectedNodes();
-            $("#content").panel('refresh' , "__URL__/showByChannel/cid/"+node[0].id);
+            $("#content").panel('refresh' , "{:U('Product/showByChannel?cid=')}"+node[0].id);
         };
         
+        var urlT = '{:U('Product/productSort')}';
          $(".easyui-panel").ajaxSuccess(function() {
-             $(".listTable").shopsort({url:"__URL__/productSort"});
+             $(".listTable").shopsort({url:urlT } );
          });
         
     });

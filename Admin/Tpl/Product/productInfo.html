@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>产品信息</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/table.css">
+</head>
+<body>
+	<ul>
+	    <li>商品名称:{$product.name}</li>
+	    <li>商品价格:{$product.price}</li>
+	</ul>
+	
+        <table width="580" cellspacing="0" cellPadding="0" class="listTable">
+             <thead>
+                    <tr>
+                        <td>上传图片</td>
+                        <td>图片属性</td>
+                        <td>删除</td>
+                    </tr>
+    		</thead>
+		<tbody>
+		    <volist name="picture" id="p">
+		        <tr>
+		            <td><img src="__PUBLIC__/Upload/thumb/s_{$p.path}" alt="" /></td>
+		            <td></td>
+		             <td></td>
+		        </tr>
+		    </volist>
+		</tbody>
+		<tfoot></tfoot>
+	</table>
+</body>
+</html>

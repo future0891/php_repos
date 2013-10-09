@@ -1,10 +1,5 @@
 <?php
 	class ProductAction extends Action {
-		public function index() {
-			echo "1";
-		}
-		
-		
 		
 		public function showList() {
 			$db = M('Product');
@@ -34,24 +29,41 @@
 		/**
 		 * 显示可操作的商品列表
 		 */
-		public function showOptList($cid = 0) {
-			$db = M("Product");
+		public function showOptList($pid = 0) {
 			import("ORG.Util.Page");
-			$count = $db->where("cid = ".$cid)->count();
+			$model = new Model();
+			$ct= $model->query("select count(*)  as ct from t_product_attribute where product_id=".$pid);
+			$count = $ct[0]["ct"];
 			$page = new Page($count , 15);
-			$product = $db->where("cid = ".$cid)->limit($page->firstRow.','.$page->listRows)->select();
+			// $product = $db->where("product_id = ".$pid)->limit($page->firstRow.','.$page->listRows)->select();
+			$sql = "select pa.* , pro.name from t_product_attribute pa left join t_product pro on pa.product_id = pro.id where pa.product_id = ".$pid." limit ".$page->firstRow.','.$page->listRows;
+			$product = $model->query($sql);			
 			$this->assign("data" , $product);
-			$this->display();			
+			 $this->display();			
 		}
 		
 		/**
 		 * 添加商品
 		 */
-		public function add() {
+		public function add($pid = 0) {
 			$db = M("Channel");
-			$data = $db->select();
-			$this->assign('channel' , json_encode($data));
-			$this->display();
+			$pro = $db->where("id=".$pid)->find();
+			$product_db = M("Product");
+			$product = $product_db->where('cid='.$pid)->find();
+			if ($pid!=0 && !empty($product) ) {
+				$pic_db = M('Picture');
+				$picture = $pic_db->where('channel_id='.$pid)->select();
+				$this->assign('picture' , $picture);
+				$this->assign('name' , $pro['name']);
+				$this->assign('product' , $product);				
+				$this->display('updatePanel');
+			} else {
+				$this->assign('name' , $pro['name']);
+				$this->assign('cid' , $pro['id']);
+				$this->assign('pid',$pro['pid']);
+				$this->display();				
+			}
+
 		}
 		
 		/**
@@ -88,30 +100,27 @@
 		public function addProcess() {
 			$product_db = M("Product");
 			$pic_db = M("Picture");
-			$attr_db = M("Product_attribute");
+			$ch_db = M("Channel");
 			$product_db->name = $_POST['name'];
 			$product_db->cid = $_POST['cid'];
 			$product_db->description = $_POST['description'];
 			$product_db->price = $_POST['price'];			
 			$p_id = $product_db->add();
-			$attr_db->inventory = $_POST['inventory'];
-			$attr_db->size = $_POST['p_size'];
-			$attr_db->product_id = $p_id;
-			$attr_db->add();
 			foreach ($_POST['path'] as $k=> $p) {
 				$pic_db->path = $p;
 				$pic_db->product_id = $p_id ;
 				$pic_db->recommend = $_POST['recommend'][$k];
 				if($_POST['recommend'][$k] == null) $pic_db->recommend = 0;
+				$pic_db->channel_id = $_POST['cid'];
 				$pic_db->add();
 			}
-			$this->redirect("add");
+			$this->redirect("addProductPanel" , array("pid"=>$_POST['cid']) );
 		}
 		
 		/**
 		 * 更新文件
 		 */
-		public function update($pid = 0) {
+		public function update($cid = 0) {
 			$db = M("Channel");
 			$data = $db->select();
 			$this->assign('channel' , json_encode($data));
@@ -119,14 +128,29 @@
 			$product = array();
 			$db_pro = M("Product");
 			$db_pic = M("Picture");
-			$pro = $db_pro->where('id='.$pid)->find();
-			$pic = $db_pic->where('product_id='.$pid)->select();
+			$pro = $db_pro->where('id='.$cid)->find();
+			$pic = $db_pic->where('product_id='.$cid)->select();
 			
 			$product=$pro;
 			$product['pic'] = $pic;
 			
 			$this->assign('product' ,$product);
 			$this->display();
+		}
+		
+		/**
+		 * 更新商品面板
+		 */
+		public function updatePanel($pid = 0) {
+			if($pid !=0) {
+				$model = new Model();
+				$sql = "select p.*,c.namefrom t_product p left join t_channel c on p.cid = c.id where c.id = ".$pid;
+				$product = $model->query($sql);
+				$this->assign('product' , $product[0]);
+				$this->display();
+			} else {
+				echo "错误";
+			}
 		}
 		
 		/**
@@ -163,6 +187,7 @@
 		 */
 		public function delExistPic($pid = 0) {
 			$db = M("Picture");
+			if($pid ==0) $pid = $_POST['pid'];
 			$pic = $db->where("id=".$pid)->find();
 			if(file_exists("./Public/Upload/".$pic['path'])) {
 				unlink("./Public/Upload/".$pic['path']);
@@ -192,12 +217,10 @@
 				
 			$data = $db->select();
 			$pids = $db->getField("pid" , true);
-			if (in_array($cid, $haystack)) {
-				
-			}
+
 			foreach ($data as $k => $p) {
 				if( in_array($p['id'], $pids) ) {
-					$temp[$k] =array_merge( $data[$k] , array("url"=>"__URL__/showByChannel/pid/".$p['id'] , "target"=>"_self" ));
+					$temp[$k] =array_merge( $data[$k] , array("url"=>U('showByChannel?pid=').$p['id'] , "target"=>"_self" ));
 				} else {
 					$temp[$k] =$data[$k];
 				}
@@ -245,20 +268,101 @@
 		public function updateProcess() {
 			$db_pro = M("Product");
 			$db_pic = M("Picture");
-			
-			$product = $_POST;
-			$db_pro->where('id='.$product['id'])->save($product);
-			foreach ($product['path'] as $p) {
+			$db_pro->id = $_POST['id'];
+			$db_pro->price = $_POST['price'];
+			$db_pro->description = $_POST['description'];
+			$db_pro->save();			
+			foreach ($_POST['path'] as $p) {
 				$data['path'] = $p;
-				$data['product_id'] = $product['id'];
+				$data['channel_id'] = $_POST['cid'];
 				$db_pic->add($data);
 			}
-			$this->redirect("showListByChannel");
+			dump($_POST);
+			$this->redirect("addProductPanel" , array("pid"=>$_POST['cid']) );
+
 		}
 		
-
+		/**
+		 * 添加商品库存尺码
+		 */
+		public function addAttPanel() {
+			$db = M("Channel");
+			$tree = $db->select();	
+			$this->assign('channel' , json_encode($tree));
+			$this->display();
+		}
 		
-
+		public function addAtt($pid = 0) {
+			// $db = M("Product");
+			// $product = $db->where('id='.$pid)->find();
+			$model = new Model();
+			$sql = "select p.* , c.name from t_product p left join t_channel c on p.cid = c.id where c.id=".$pid;
+			$product = $model->query($sql);
+			$db = M("Product_attribute");
+			$attr = $db->where("product_id=".$pid)->select();
+			$this->assign('attr' , $attr);
+			$this->assign('product' , $product[0]);
+			$this->display();
+		}
+		
+		/**
+		 * 库存尺码处理
+		 */
+		public function attrProcess() {
+			$attr = M("Product_attribute");
+			$attr->size = $_POST['size'];
+			$attr->inventory = $_POST['inventory'];
+			$attr->product_id = $_POST['product_id'];
+			$attr->add();
+			$this->redirect('Product/addAttPanel');
+		}
+		
+		/**
+		 * 更新库存尺码
+		 */
+		public function attrUpdate($pid=0) {
+			$db = M("Product_attribute");
+			if($pid !=0) $attr =$db->where("id=".$pid)->find();
+			$this->assign('attr' , $attr);
+			$this->display();
+		}
+		
+		public function attrUpdateProcess() {
+			$db = D("Product_attribute");
+			if($db->create()) {
+				$db->save();
+			}				
+		}
+		
+		/**
+		 * Ajax 删除商品尺码库存
+		 */
+		public function attr_delete() {
+			$db = M("Product_attribute");
+			$result = $db->where('id='.$_POST['pid'])->delete();
+			echo $result;
+		}
+		
+		/**
+		 * 添加商品属性 
+		 */
+		public function addProductPanel($pid = 0) {
+			if($pid!=0) {
+				$this->assign('pid' , $pid);
+			}
+			$this->display();
+		}
+		
+		public function productInfo($pid = 0) {
+			$model = new Model();
+			$sql = "select p.* ,c.name  from t_product p left join t_channel c on p.cid = c.id where p.cid= ".$pid; 
+			$product = $model->query($sql);
+			$p_sql = "select path from t_picture  where channel_id = ".$pid;
+			$picture = $model->query($p_sql);
+			$this->assign('product' , $product[0]);
+			$this->assign('picture' , $picture);
+			$this->display();
+		}
 		
 	}
 ?>

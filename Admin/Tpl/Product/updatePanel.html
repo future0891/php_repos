@@ -3,25 +3,16 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<title>商品添加</title>
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" />
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css">
-        <link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/uploadify.css" />
-        <script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script>
+
 </head>
-<script>
-             $(function(){
-                easyloader.theme="bootstrap";
-            });  
-</script>
+
 <body>
-	<form action="{:U('Product/addProcess')}" method="post" >
+	<form action="{:U('Product/updateProcess')}" method="post" >
 	   {$name}<br/>
-	   <label>商品价格:</label><input type="text" name="price" id="price" /><br/>
-	   <label>商品描述:</label><textarea name="description" id="" cols="30" rows="5" ></textarea><br/>
-	   <input type="hidden" name="cid" id="cid" value="{$cid}"/>
-        <input type="hidden" name="pid" id="pid" value="{$pid}"/>
+	   <input type="hidden" name="id" value="{$product.id}" />
+	   <input type="hidden" name="cid" value="{$product.cid}" />
+	   <label>商品价格:</label><input type="text" name="price" value = '{$product.price}'/><br/>
+	   <label>商品描述:</label><textarea name="description"  cols="30" rows="5" value = '{$product.description}'></textarea><br/>
        <div id="file_wrap">
        <input type="file" name="pic" id="pic" />
        </div>	   
@@ -36,7 +27,13 @@
                 </tr>
             </thead>
             <tbody id="u_pic">
-                
+                <volist  name = 'picture' id = 'p'>
+                    <tr>
+                    	<td><img src="__PUBLIC__/Upload/thumb/s_{$p.path}" /></td>
+                    	<td></td>
+                    	<td><a href="#" title="{$p.id}" class='pic_delbtn' >删除</a></td></td>
+                    </tr>
+                </volist>
             </tbody>
             <tfoot></tfoot>
         </table>	   

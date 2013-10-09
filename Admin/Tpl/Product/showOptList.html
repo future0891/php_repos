@@ -11,6 +11,8 @@
         <tr>
             <td>编号</td>
             <td>名称</td>
+            <td>尺码</td>
+            <td>库存</td>
             <td>操作</td>
         </tr>
         </thead>
@@ -20,10 +22,12 @@
                <tr <eq name="mod" value="1"> class ="oddClm"</eq> >
                     <td>{$vo.id}</td>
                     <td>{$vo.name}</td>
+                    <td>{$vo.size}</td>
+                    <td>{$vo.inventory}</td>
                     <td>
                         <a href="#" title="{$vo.id}" class="easyui-linkbutton updatebtn"  data-options="iconCls:'icon-edit'">更新</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="__URL__/delete/pid/{$vo.id}"  class="easyui-linkbutton delbtn" data-options="iconCls:'icon-remove'">删除</a>
+                        <a href="{:U('Productdelete?pid=')}{$vo.id}"  class="easyui-linkbutton delbtn" data-options="iconCls:'icon-remove'">删除</a>
                    </td>
             </tr>
         </volist>

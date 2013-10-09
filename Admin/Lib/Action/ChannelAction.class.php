@@ -8,6 +8,8 @@
 			$pid = $this->_param('pid');
 			if($pid == null) $pid = 0;
 			$this->assign('pid' , $pid);
+			$this->assign('page' , $this->_param('page'));
+			$this->assign('channel' , $this->genTree());
 			$this->display();
 		}
 		public function channelInfo() {
@@ -31,7 +33,7 @@
 			if($db->create()) {
 				$db->add();
 			}
-			$this->redirect('showChannel');
+			$this->redirect('showChannel' ,array('page'=>$_POST['pid']));
 		}
 		
 		public function showInfo($pid=0) {
@@ -60,7 +62,7 @@
 				}
 			$pid = $db->where("id=".$id)->getField('pid');
 			}
-			$this->redirect('showInfo' , array('pid' => $pid) );
+			$this->redirect('showChannel' , array('page' => $pid) );
 		}
 		
 		public function delete() {
@@ -73,7 +75,7 @@
 			if($pid ==null) {
 				$pid = 0;
 			}
-			$this->redirect('showChannel',array("pid"=>$pid) );
+			$this->redirect('showChannel',array("page"=>$pid) );
 		}
 		
 	}

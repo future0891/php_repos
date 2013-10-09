@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <form action="__URL__/updateProcess/id/{$data.id}" method="post">
+    <form action="{:U('Channel/updateProcess?id=')}{$data.id}" method="post">
     		<input type="text" name="name" value="{$data.name}" ><br/>
     		<input type="text" name="pname" readonly="readonly" id="channel" value="{$pname}"><br>
             <input type="hidden" name="pid" value="{$data.pid}" id="pid" />
@@ -20,7 +20,7 @@
 	    
     </form>
 
-    <div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA">
+    <div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #f0f6e4">
         <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
     </div>
 </body>

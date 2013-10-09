@@ -10,10 +10,12 @@
                     }
                 },
              callback: {
-                    onClick: onClick
+                    onClick: onClick,
+                    beforeClick:beforeClick
              },
              
-             zNodes:""
+             zNodes:"",
+             showChannel:true,
 		}, opts||{});
 		
         function beforeClick(treeId, treeNode) {
@@ -41,18 +43,18 @@
 	
 })(jQuery);
 
-            function onClick(e, treeId, treeNode) {
-                var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
-                nodes = zTree.getSelectedNodes(),
-                v = nodes[0].name;
-                var cObj = $("#channel");
-                cObj.attr("value", v);
-                if($("#pid"))
-                	$("#pid").attr("value" , nodes[0].id);
-                if($("#cid"))
-                	$("#cid").attr("value" , nodes[0].id);
-            }
-    
+		    function onClick(e, treeId, treeNode) {
+		        var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		        nodes = zTree.getSelectedNodes(),
+		        v = nodes[0].name;
+		        var cObj = $("#channel");
+		        cObj.attr("value", v);
+		        if($("#pid"))
+		        	$("#pid").attr("value" , nodes[0].id);
+		        if($("#cid"))
+		        	$("#cid").attr("value" , nodes[0].id);
+		    }		
+        
             function showMenu() {
                 var cObj = $("#channel");
                 var cOffset = $("#channel").offset();

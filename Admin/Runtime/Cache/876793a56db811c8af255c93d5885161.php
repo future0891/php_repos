@@ -1,22 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>showChannel</title>
-         <link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" />
-         <link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/table.css">
-         <link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/uploadify.css" />
-         <link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css">
-        <script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.excheck-3.5.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/Js/formTree.js"></script>
-        <script type="text/javascript" src="__PUBLIC__/Js/ProductTree.js"></script>
-        <script type="text/javascript">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>showChannel</title><link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" /><link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/table.css"><link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/uploadify.css" /><link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css"><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.excheck-3.5.js"></script><script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script><script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.js"></script><script type="text/javascript" src="__PUBLIC__/Js/formTree.js"></script><script type="text/javascript" src="__PUBLIC__/Js/ProductTree.js"></script><script type="text/javascript">
         var t;
         $(function(){
             easyloader.theme = "bootstrap";
@@ -29,9 +12,9 @@
                 $("#leftTree").panel("refresh");
             });
 
-            var channel = {$channel};
-            var p_as = "{:U('Channel/channelInfo')}";
-            var p_re = "{:U('Product/showOptList?pid=')}";
+            var channel = <?php echo ($channel); ?>;
+            var p_as = "<?php echo U('Channel/channelInfo');?>";
+            var p_re = "<?php echo U('Product/showOptList?pid=');?>";
              $("#tree").ProductTree({async:{enable:true,url:p_as} , refreshPage:p_re ,isChannel:false   } );
             
                    
@@ -45,7 +28,7 @@
 
                    $(".updatebtn").on("click",function(){
                        
-                       $("#p_content").panel("refresh" , "{:U('Product/update?cid=')}"+$(this).attr("title"));
+                       $("#p_content").panel("refresh" , "<?php echo U('Product/update?cid=');?>"+$(this).attr("title"));
                    });    
                }
                
@@ -62,7 +45,7 @@
                     'auto':false,
                     'buttonText' : '请选择文件',
                     'swf': '__PUBLIC__/uploadify/uploadify.swf',
-                    'uploader' : "{:U('Product/getImage')}",
+                    'uploader' : "<?php echo U('Product/getImage');?>",
                     'button_image_url':'__APP__',
                     'fileTypeExts' : '*.gif; *.jpg; *.png',
                     'onUploadSuccess' : function(file, data, response) {
@@ -96,7 +79,7 @@
                              if(!confirm("该操作不可逆,是否确认删除!")) {
                                 return false;
                             }
-                            $.post("{:U('Product/delPic')}delPic" , {'pic': data} ,function(r){
+                            $.post("<?php echo U('Product/delPic');?>delPic" , {'pic': data} ,function(r){
                                 $(col).parents("tr").remove();
                             });
 
@@ -109,30 +92,12 @@
             
         });
 
-        </script>      
-<style type="text/css">
+        </script><style type="text/css">
 #file_wrap {
     display:block;
     width:500px;
     height:200px;
 }
-</style>
-    </head>
-    <body>
-     <div  id = "p_wrap" style="width:900px;height:700px;padding:10px;">
-        <div id="p_layout" >
-            <div data-options="region:'west',split:true" style="width:170px;padding:10px" id ="leftTree">
-                <ul id="tree" class="ztree"></ul>
-            </div>
-            <div data-options="region:'center'" style="padding:10px" id="p_content">
+</style></head><body><div  id = "p_wrap" style="width:900px;height:700px;padding:10px;"><div id="p_layout" ><div data-options="region:'west',split:true" style="width:170px;padding:10px" id ="leftTree"><ul id="tree" class="ztree"></ul></div><div data-options="region:'center'" style="padding:10px" id="p_content">
                 选择栏目
-            </div>
-        </div>
-    </div>
-    <div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA;">
-        <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
-    </div>    
-    
-    </body>
-</html>
-
+            </div></div></div><div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA;"><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>

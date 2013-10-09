@@ -4,6 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 	<title>商品添加</title>
 </head>
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/admin.css">
 <script>
     
             var zNodes ={$channel};
@@ -43,7 +44,7 @@
             });  
 </script>
 <body>
-	<form action="__URL__/updateProcess" method="post" >
+	<form action="{:U('Product/updateProcess')}" method="post" >
 	    <input type="hidden" name="id"  value="{$product.id}" />
 	   <label>商品名称:</label><input type="text" name="name" value="{$product.name}" /><br/>
 	   <label>商品种类:</label><input type="text" name=""  value="" id="channel" /><br/>
@@ -74,7 +75,7 @@
         </table>
        <input  type="submit" value="提交"/>
     </form>	
-    <div id="menuContent" class="menuContent" style="display:none; position: absolute;background-color: #5FC6DA">
+    <div id="menuContent" class="menuContent">
         <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
     </div>
 </body>
