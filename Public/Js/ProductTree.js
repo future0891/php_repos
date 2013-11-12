@@ -30,8 +30,10 @@
 				if(!settings.isChannel) {
 					showNode = !treeNode.isParent;
 				}
-				var check = (treeNode && showNode);
-				if (!check) alert("只能选择品种");
+				var check = (treeNode && showNode &&!treeNode.noadd);
+				if (!check) {
+					alert("只能选择不为空品种");
+				}
 				return check;
 			}
             t = $.fn.zTree.init($("#tree") , settings);

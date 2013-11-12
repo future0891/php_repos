@@ -6,8 +6,9 @@
                 <div id="product_icon"></div>
                 <br class="clear">
                 <div id="product_img">
-                    <volist name="pic" id='p'>
-                    <img src="__PUBLIC__/Upload/Thumb/s_{$p['path']}" alt="无图" /><br>
+                    <img src="__PUBLIC__/Upload/Thumb/m_{$cover}"  /><br/>
+                    <volist name="picture" id='p'>
+                    <img src="__PUBLIC__/Upload/Thumb/s_{$p['path']}" alt="无图" />&nbsp;
                     </volist>
                 </div>
                 
@@ -25,6 +26,11 @@
                     <dd>{$product.description}</dd>
                     <br class="clear">
                 </dl>
+                
+                现有尺寸 
+                <volist name="size" id="a">
+                    {$a.size}<br>
+                </volist>
             </div>
             </div>
             

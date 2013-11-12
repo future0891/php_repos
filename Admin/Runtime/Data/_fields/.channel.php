@@ -1,1 +1,1 @@
-<?php	return array ( 0 => 'id', 1 => 'name', 2 => 'pid', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(100)', 'name' => 'varchar(255)', 'pid' => 'int(100)', ), );?>
+<?php	return array ( 0 => 'id', 1 => 'name', 2 => 'pid', 3 => 'sort', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(100)', 'name' => 'varchar(255)', 'pid' => 'int(100)', 'sort' => 'int(11)', ), );?>

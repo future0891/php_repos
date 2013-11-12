@@ -30,7 +30,7 @@
                 <volist  name = 'picture' id = 'p'>
                     <tr>
                     	<td><img src="__PUBLIC__/Upload/thumb/s_{$p.path}" /></td>
-                    	<td></td>
+                    	<td>设置为封面<input type="radio" name="cover" value="{$p.path}" <if condition="$product['cover'] eq $p['id'] "> checked = "checked"</if>  /></td>
                     	<td><a href="#" title="{$p.id}" class='pic_delbtn' >删除</a></td></td>
                     </tr>
                 </volist>

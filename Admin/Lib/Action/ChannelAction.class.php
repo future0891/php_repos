@@ -1,21 +1,32 @@
 <?php
-	class ChannelAction extends Action {
+	class ChannelAction extends AuthAction {
 
 		public function showChannel() {
 			$db = M("Channel");
-			$data = $db->select();
-			$this->assign("channel" , json_encode($data));
+			$data = $db->order('order ')->select();
 			$pid = $this->_param('pid');
 			if($pid == null) $pid = 0;
 			$this->assign('pid' , $pid);
 			$this->assign('page' , $this->_param('page'));
 			$this->assign('channel' , $this->genTree());
 			$this->display();
+			
 		}
+		/**
+		 * 生成品种树
+		 */
 		public function channelInfo() {
 			$db = M("Channel");
 			$data = $db->select();
-			echo json_encode($data);
+			foreach($data as $k => $v) {
+				if($v['pid'] ==0) {
+					if(empty($db->where('pid=' .$v['id'])->count()) ) {
+						$data[$k]["iconSkin"] = "emptyChannel";
+						$data[$k]["noadd"] = "true";
+					}
+				}
+			}
+			echo json_encode($data); 
 		}		
 	
 		public function add() {
@@ -26,6 +37,11 @@
 		private function genTree() {
 			$db = M('Channel');
 			$channel = $db->select();
+			foreach ($channel as $key => $value) {
+				if($value['pid'] ==0) {
+					$channel[$key]['isParent'] ='true';
+				}
+			}
 			return json_encode($channel);
 		}
 		public function addProcess() {
@@ -78,6 +94,30 @@
 			$this->redirect('showChannel',array("page"=>$pid) );
 		}
 		
+		public function sortChannel($channel =0) {
+			$this->display();
+		}
+		
+		public function sortChannelPanel($channel =0) {
+			$db = M("Channel");
+			$product = $db->where("pid=".$channel)->order("sort")->select();
+			$this->assign('product' , $product);
+			$this->display();
+		}
+		
+		// 排序ui ajax排序处理 
+		public function sortChannelProccess() {
+			if(IS_AJAX) {
+				$db = M("Channel");
+				foreach ($_POST['sort'] as $k => $v) {
+					$db->where('id='.$v)->setField("sort" , ++$k);
+				}
+				echo "排序成功";
+			} else {
+				echo "排序失败!";
+			}
+		}
+
 	}
 
 ?>

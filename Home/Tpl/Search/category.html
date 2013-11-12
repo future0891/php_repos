@@ -1,0 +1,35 @@
+        <div id="list_container">
+             <!--搜索列表  -->
+            <div id="search_box">
+                <div id="search_box_left"></div>
+                <div id="search_box_container">
+                    <div id="search_icon"></div>
+                    <div id="search_faq"></div>
+                    <div id="search_content">
+                        <form action="">
+                            <input type="text" name="" id="" />
+                            <input type="submit" value="搜索" />
+                        </form>
+                    </div>
+                </div>
+                <div id="search_box_right"></div>
+            </div>
+        <!--搜索里列表结束  -->
+        
+ 
+        <br class="clear">
+        <notempty name="p_list">
+        <!--搜索列表  -->
+        <div id="list_box">
+            <ul>
+                <Foreach name="p_list" item="p">
+                    <li><span><a href="{:U('Product/info' , array('pid'=>$p['id']  ) ) }"><img src="__PUBLIC__/Upload/Thumb/s_{$p.path}" alt="" /></a></span><span>{$p.name}</span><span>￥{$p.price}元</span></li>
+                </Foreach>
+            </ul>
+        </div>
+        <!--搜索列表结束  -->    
+      </notempty>
+      <empty name="p_list">该商品不存在</empty>
+       </div>
+   </div>
+    <!--主体第一部分结束-->

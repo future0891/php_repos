@@ -16,7 +16,6 @@
         <script type="text/javascript" src="__PUBLIC__/Js/formTree.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Js/ProductTree.js"></script>
         <script type="text/javascript">
-         var t;
         $(function(){
             easyloader.theme = "bootstrap";
             using(['panel' ,'layout'] , function(){
@@ -38,7 +37,7 @@
             
             
             $("#p_content").ajaxSuccess(function(event, xhr, settings) {
-                using('linkbutton' , function(){
+                using(['linkbutton' , 'messager'] , function(){
                    $('.attr_update').linkbutton({
                         iconCls: 'icon-edit'    
                    });
@@ -56,8 +55,11 @@
                            }
                            
                        } );
-                       
                    });
+                   
+                   if($("#error_flag").attr('title')) {
+                       $.messager.alert("失败" , "请先添加商品属性");
+                   }
                    
                 });
             });
@@ -73,7 +75,7 @@
             <div data-options="region:'west',split:true" style="width:170px;padding:10px" id ="leftTree">
                 <ul id="tree" class="ztree"></ul>
             </div>
-            <div data-options="region:'center'" style="padding:10px" id="p_content" <notempty  name='flag'>href="{:U('Product/addAtt')}"</notempty> >
+            <div data-options="region:'center'" style="padding:10px" id="p_content" <notempty  name='flag'>href="{:U('Product/addAtt?pid')}{$flag}"</notempty> >
             </div>
         </div>
     </div>

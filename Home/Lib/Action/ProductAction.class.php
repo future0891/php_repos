@@ -17,13 +17,19 @@
 		function info($pid=0) {
 			if(0!=$pid) {
 				$model = new Model();
-				$sql = "select * from t_product where id=".$pid;
+				$sql = "select c.name ,c.id ,pr.description ,pr.price , pr.cover 
+							 from t_channel c LEFT JOIN t_product pr on c.id = pr.cid where c.id=".$pid;
 				$product = $model->query($sql);
-				$sql = "select * from t_picture where product_id=".$pid;
-				$picture = $model->query($sql);
-				$this->assign("picture" , $picture);
-				$this->assign("product" , $product);
-				dump($picture);
+				$pic_sql = "select path  from t_picture  where channel_id = ".$product[0]['id'];
+				$picture = $model->query($pic_sql);
+				$cover = $model->query("select path from t_picture where id=".$product[0]['cover']);
+				$attr_sql= "select size from t_product_attribute where channel_id= ".$pid;
+				$attr = $model->query($attr_sql);
+				$this->assign("product" , $product[0]);
+				$this->assign('picture' , $picture);
+				$this->assign('size' , $attr);
+				$this->assign('cover' , $cover[0]['path']);
+				$this->display();
 			}
 		}
 	}

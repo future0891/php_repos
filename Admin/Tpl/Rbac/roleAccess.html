@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>角色权限设置</title>
+	<link rel="stylesheet" href="__PUBLIC__/Css/table.css" />
+</head>
+<body>
+	<table width="580" cellspacing="0" cellPadding="0" class="listTable">
+		<thead>
+		    <td>角色名称</td>
+		    <td>角色描述</td>
+		    <td>角色状态</td>
+		    <td>权限设置</td>
+		</thead>
+		<tbody>
+        <foreach name="roles" item="r">
+            <tr>
+                    <td>{$r.name}</td>
+                    <td>{$r.remark}</td>
+                    <td><if condition="$r['status'] eq 1">开启<else/>关闭</if></td>
+                    <td><a href="{:U('Rbac/addAccess' , array('rid'=>$r['id'] ,'remark'=>$r['remark'])) }">配置权限</a></td>
+            </tr>
+        </foreach>
+		</tbody>
+		<tfoot></tfoot>
+	</table>
+</body>
+</html>

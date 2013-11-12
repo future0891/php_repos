@@ -1,6 +1,6 @@
 <?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>showChannel</title><link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" /><link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/table.css"><link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css"><link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/admin.css"><script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script><script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.excheck-3.5.js"></script><script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script><script type="text/javascript" src="__PUBLIC__/Js/formTree.js"></script><script type="text/javascript" src="__PUBLIC__/Js/ProductTree.js"></script><script type="text/javascript">
-        var t;
+        var channel = <?php echo ($channel); ?>;
         $(function(){
             easyloader.theme = "bootstrap";
             using(['panel' ,'layout'] , function(){
@@ -22,8 +22,6 @@
                        $("#p_content").panel("refresh" , "<?php echo U('Channel/update?id=');?>"+$(this).attr("title"));
                    });    
                }
-               
-               var channel = <?php echo ($channel); ?>;
                     $("#treeDemo").formTree({zNodes:channel}).expandAll(true);
                     $("#channel").click(showMenu);
 

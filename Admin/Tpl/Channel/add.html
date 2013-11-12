@@ -15,7 +15,7 @@
              var channel = {$channel};       
             $(function(){
                 easyloader.theme = "bootstrap";
-                   $("#treeDemo").formTree({zNodes:channel}).expandAll(true);
+                   $("#treeDemo").formTree({zNodes:channel ,addChildChannel:true }).expandAll(true);
                     $("#channel").click(showMenu);
             });
         </script>

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>Document</title>
+	<link rel="stylesheet" href="__PUBLIC__/Css/rbac.css" />
+</head>
+<body>
+    <div id="wrap">
+        <a href="{:U('Rbac/addNode' , array('level'=>1))}" class="add-app">添加项目</a>
+        <volist name="node" id="app">
+            <div class="app">
+                <p>
+                    <strong>{$app.remark}</strong>
+                    [<a href="{:U('Rbac/addNode' , array('pid'=>$app['id'] , 'level'=>2) )}">添加控制器</a>]
+                </p>
+              
+              <volist name="app['child']" id="action">
+                  <dl>
+                      <dt>
+                          <strong>{$action.remark}</strong>
+                          [<a href="{:U('Rbac/addNode' , array('pid'=>$action['id'] , 'level'=>3 ) ) }">添加方法</a>]
+                      </dt>
+                          <volist name="action['child']" id="method">
+                              <dd>
+                                <strong>{$method.remark}({$method.name})</strong>
+                              </dd>
+                          </volist>
+                  </dl>
+              </volist>     
+                
+            </div>
+        </volist>
+    </div> 
+</body>
+</html>

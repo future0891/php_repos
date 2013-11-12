@@ -27,12 +27,12 @@
                     'auto':false,
                     'buttonText' : '请选择文件',
                     'swf': '__PUBLIC__/uploadify/uploadify.swf',
-                    'uploader' : '__URL__/getImage',
+                    'uploader' : '{:U("Public/getImage")}',
                     'button_image_url':'__APP__',
                     'fileTypeExts' : '*.gif; *.jpg; *.png',
                     'onUploadSuccess' : function(file, data, response) {
                         var resp = "<tr><td><img src=__PUBLIC__/Upload/Thumb/s_"+data + "  alt='无图片' /></td>";
-                        resp +="<td>是否推荐<input type='checkbox'  name='recommend' value='1'/><input type='hidden' name='path[]' value ='" +data+"' ></td>";
+                        resp +="<td>设置为封面<input type='checkbox'  name='cover' value='1'/><input type='hidden' name='path[]' value ='" +data+"' ></td>";
                         resp +="<td><a href='#' class='delbtn' >删除</a></td></tr>";
 
                         $('#u_pic').append(resp);
@@ -66,7 +66,7 @@
                 <volist name="product.pic" id='p' >
                 <tr>
                 	<td><img src="__PUBLIC__/Upload/Thumb/s_{$p.path}" alt="无图片" /></td>
-                	<td>是否推荐<input type='checkbox' <if condition='$p.recommend eq 1'>checked = "checked"</if> name='recommend' value='1'/><input type='hidden' name='path[]' value ='' ></td>
+                	<td>设置为封面<input type='checkbox' <if condition='$p.recommend eq 1'>checked = "checked"</if> name='recommend' value='1'/><input type='hidden' name='path[]' value ='' ></td>
                 	<td><a href='__URL__/delExistPic/pid/{$p.id}' class='pic_delbtn' >删除</a></td></td>
                 </tr>
                 </volist>

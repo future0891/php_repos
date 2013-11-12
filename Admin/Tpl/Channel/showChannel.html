@@ -16,7 +16,7 @@
         <script type="text/javascript" src="__PUBLIC__/Js/formTree.js"></script>
         <script type="text/javascript" src="__PUBLIC__/Js/ProductTree.js"></script>
         <script type="text/javascript">
-        var t;
+        var channel = {$channel};
         $(function(){
             easyloader.theme = "bootstrap";
             using(['panel' ,'layout'] , function(){
@@ -38,8 +38,6 @@
                        $("#p_content").panel("refresh" , "{:U('Channel/update?id=')}"+$(this).attr("title"));
                    });    
                }
-               
-               var channel = {$channel};
                     $("#treeDemo").formTree({zNodes:channel}).expandAll(true);
                     $("#channel").click(showMenu);
 
@@ -73,7 +71,6 @@
      <div id="menuWrap" class="menuContent" >
         <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
     </div>    
-    
     </body>
 </html>
 

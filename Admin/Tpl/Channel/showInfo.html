@@ -24,7 +24,7 @@
                         <!-- <a href="__URL__/update/id/{$vo.id}" class="easyui-linkbutton" id="updatebtn" data-options="iconCls:'icon-edit'">更新</a> -->
                         <a href="#" title="{$vo.id}" class="easyui-linkbutton updatebtn"  data-options="iconCls:'icon-edit'">更新</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{:U('Channel/delete?id=')}{$vo.id}"  class="easyui-linkbutton delbtn" data-options="iconCls:'icon-remove'">删除</a>
+                        <a href="{:U('Channel/delete',array('id'=>$vo['id']) ) } "  class="easyui-linkbutton delbtn" data-options="iconCls:'icon-remove'">删除</a>
                    </td>
             </tr>
 		</volist>

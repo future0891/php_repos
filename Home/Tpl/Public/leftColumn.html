@@ -30,12 +30,9 @@
             
             <div class="left_category_body">
                 <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <Foreach name="category" item="c">
+                     <li><a href="{:U('Search/brand' , array('bid'=>$c['id']))}">{$c.name}</a></li>   
+                    </Foreach>
                 </ul>
             </div>
             

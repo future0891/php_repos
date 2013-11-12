@@ -6,7 +6,7 @@
 </head>
 <body>
 	<form action="{:U('Product/attrProcess')}" method="post">
-	    商品名称:{$product.name}<input type="hidden" name="product_id" value="{$product.cid}" /><br/>
+	    商品名称:{$product.name}<input type="hidden" name="channel_id" value="{$product.cid}" /><br/>
 	    商品尺码:<input type="text" name="size" id="" /><br/>
 	    商品库存: <input type="text" name="inventory" id="" /><br/>
 	    <input type="submit" value="提交" />
@@ -26,7 +26,7 @@
         	        <tr>
         	            <td>{$a.size}</td>
         	            <td>{$a.inventory}</td>
-        	            <td><a href="{:U('Product/attrUpdate?pid=')}{$a.id}" class="attr_update">更新</a>&nbsp;&nbsp;<a href="#" title="{$a.id}" class="attr_del">删除</a></td>
+        	            <td><a href="{:U('Product/attrUpdate' , array('pid' => $a['id']) ) }" class="attr_update">更新</a>&nbsp;&nbsp;<a href="#" title="{$a.id}" class="attr_del">删除</a></td>
         	        </tr>
         	    </volist>
         	</tbody>

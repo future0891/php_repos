@@ -1,0 +1,26 @@
+    <table width="580" cellspacing="0" cellPadding="0" class="listTable">
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>商品名字</td>
+            </tr>
+        </thead>
+        <tbody>
+            <volist id = "p" name="product">
+                <tr id="{$p.id}">
+                    <td>{$p.id}</td>
+                    <td>{$p.name}</td>
+                </tr>
+            </volist>
+            <empty name="product">
+                <tr>
+                    <td colspan="2">没有数据</td>
+                </tr>
+            </empty>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"><a href="#" id="startSort" class="easyui-linkbutton"  data-options="iconCls:'icon-ok'">开始排序</a>&nbsp;<a href="#" class="easyui-linkbutton"  data-options="iconCls:'icon-save',disabled:true" id="stopSort">结束保存</a>&nbsp;</td>
+            </tr>
+        </tfoot>
+    </table>

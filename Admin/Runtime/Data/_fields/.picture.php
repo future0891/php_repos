@@ -1,1 +1,1 @@
-<?php	return array ( 0 => 'id', 1 => 'path', 2 => 'channel_id', 3 => 'sort', 4 => 'recommend', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(11)', 'path' => 'varchar(255)', 'channel_id' => 'int(11)', 'sort' => 'int(11)', 'recommend' => 'int(11)', ), );?>
+<?php	return array ( 0 => 'id', 1 => 'path', 2 => 'channel_id', 3 => 'sort', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(11)', 'path' => 'varchar(255)', 'channel_id' => 'int(11)', 'sort' => 'int(11)', ), );?>

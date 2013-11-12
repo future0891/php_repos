@@ -16,21 +16,26 @@
              
              zNodes:"",
              showChannel:true,
+             addChildChannel:false,
 		}, opts||{});
 		
         function beforeClick(treeId, treeNode) {
-            var check = (treeNode && !treeNode.isParent);
-            if(settings.showChannel)
-                check = (treeNode && treeNode.isParent);
-            if (!check) {
-            	if(!settings.showChannel)
-            	{
-            		alert("只能选择商品...");
-            	} else {
-            		alert("只能选择品种");
-            	}
+        	if(!settings.addChildChannel) {
+	            var check = (treeNode && !treeNode.isParent);
+	            if(settings.showChannel)
+	                check = (treeNode && treeNode.isParent);
+	            if (!check) {
+	            	if(!settings.showChannel)
+	            	{
+	            		alert("只能选择商品...");
+	            	} else {
+	            		alert("只能选择品种");
+	            	}
+	            }
+	            return check;
+            } else {
+            	return ;
             }
-            return check;
         }
             
         var zNodes =settings.zNodes;

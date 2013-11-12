@@ -3,3 +3,6 @@
 	position: absolute;
 	background-color: #f0f6e4;	
 }
+.ztree li span.button.emptyChannel_ico_open{margin-right:2px; background: url(../ztree/css/zTreeStyle/img/zTreeStandard.png) no-repeat scroll 0 0 transparent;background-position:-110px -16px; vertical-align:top; *vertical-align:middle}
+.ztree li span.button.emptyChannel_ico_close{margin-right:2px; background: url(../ztree/css/zTreeStyle/img/zTreeStandard.png) no-repeat scroll 0 0 transparent;background-position:-110px 0 vertical-align:top; *vertical-align:middle}
+.ztree li span.button.emptyChannel_ico_docu{margin-right:2px; background: url(../ztree/css/zTreeStyle/img/zTreeStandard.png) no-repeat scroll 0 0 transparent; vertical-align:top; background-position:-110px 0px; *vertical-align:middle}
