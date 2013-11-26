@@ -64,6 +64,7 @@
 			$product_db->cid = $_POST['cid'];
 			$product_db->description = $_POST['description'];
 			$product_db->price = $_POST['price'];			
+			$product_db->recommend = $_POST['recommend'];
 			$p_id = $product_db->add();
 			foreach ($_POST['path'] as $k=> $p) {
 				$pic_db->path = $p;
@@ -104,8 +105,9 @@
 		public function updatePanel($pid = 0) {
 			if($pid !=0) {
 				$model = new Model();
-				$sql = "select p.*,c.name from t_product p left join t_channel c on p.cid = c.id where c.id = ".$pid;
-				$product = $model->query($sql);
+				$sql = "select p.*,c.name from t_product p left join t_channel c on p.cid = c.id where c.id = %d";
+				// $sql = "select p.*,c.name from t_product p left join t_channel c on p.cid = c.id where c.id =".$pid;
+				$product = $model->query($sql , $pid);
 				$this->assign('product' , $product[0]);
 				$cover = $product[0]['cover'];
 				$this->display();
@@ -233,6 +235,7 @@
 			$db_pro->id = $_POST['id'];
 			$db_pro->price = $_POST['price'];
 			$db_pro->description = $_POST['description'];
+			$db_pro->recommend = $_POST['recommend'];
 			$cover = $db_pic->where("path = '".$_POST['cover']."'")->getField("id");
 			if(!empty($cover)) $db_pro->cover =$cover;
 			$db_pro->save();			

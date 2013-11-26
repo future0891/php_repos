@@ -2,7 +2,7 @@
             <div id="brand_top"><img src="__PUBLIC__/Css/images/brand_icon.png" alt="" /></div>
             <div id="brand_content">
                 <Foreach name="brand" item="b">
-                    {$b.name}<br/>
+                   <a href="{:U('Search/category' , array('cid'=>$b['id']))}">{$b.name}</a><br/>
                 </Foreach>
                 
             </div>

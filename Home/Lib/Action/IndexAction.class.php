@@ -9,7 +9,11 @@ class IndexAction extends Action {
 			$this->assign("new_product" , $product);
 			$sql = "select id,pid,name from t_channel where pid=%d";
 			$category = $model->query($sql , 0);
-			$this->assign("category" , $category);						
+			$this->assign("category" , $category);			
+			$this->rotator = $model->query("select * from t_rotator");			
+			$sql = "select c.name , pro.price , pic.path from t_channel c left join t_picture pic on c.id=pic.channel_id left join t_product pro
+						on pro.cid=c.id where pro.cover=pic.id and pro.recommend=1 ";
+			$this->rightPic = $model->query($sql);
 			$this->display();
     }
 }

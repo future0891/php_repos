@@ -16,4 +16,16 @@
 		}
 		return $arr; 
 	}
+	
+	function genTree() {
+		$db = M('Channel');
+		$channel = $db->select();
+		foreach ($channel as $key => $value) {
+			if($value['pid'] ==0) {
+				$channel[$key]['isParent'] ='true';
+			}
+		}
+		return json_encode($channel);
+	}
+	
 ?>

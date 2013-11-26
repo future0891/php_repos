@@ -30,7 +30,10 @@
             var p_as = "{:U('Channel/channelInfo')}";
             var p_re = "{:U('Channel/showInfo?pid=')}";
              $("#tree").ProductTree({async:{enable:true,url:p_as} , refreshPage:p_re   } );
-                   
+            
+            $("#rootColumn").click(function() {
+                  $("#p_content").panel("refresh" , "{:U('Channel/showInfo') }"); 
+            });       
            $("#p_content").ajaxSuccess(function(){
                if(!$.isEmptyObject('.updatebtn') ) {
                    $(".delbtn").delItem();
@@ -57,9 +60,10 @@
      <div  id = "p_wrap" style="width:900px;height:500px;padding:10px;">
         <div id="p_layout" >
             <div data-options="region:'west',split:true" style="width:170px;padding:10px" id ="leftTree">
+                <span><a href="#" id="rootColumn">根栏目操作</a></span>
                 <ul id="tree" class="ztree"></ul>
             </div>
-            <div data-options="region:'center' , <notempty name='page'>href: '{:U('Channel/showInfo?pid=')}{$page}' </notempty> " style="padding:10px" id="p_content">
+            <div data-options="region:'center' , <notempty name='page'>href: '{:U('Channel/showInfo' , array("pid"=>$page) ) }' </notempty> " style="padding:10px" id="p_content">
                 选择品种
             </div>
         </div>

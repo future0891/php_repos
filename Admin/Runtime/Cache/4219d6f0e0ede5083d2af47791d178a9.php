@@ -14,7 +14,10 @@
             var p_as = "<?php echo U('Channel/channelInfo');?>";
             var p_re = "<?php echo U('Channel/showInfo?pid=');?>";
              $("#tree").ProductTree({async:{enable:true,url:p_as} , refreshPage:p_re   } );
-                   
+            
+            $("#rootColumn").click(function() {
+                  $("#p_content").panel("refresh" , "<?php echo U('Channel/showInfo') ;?>"); 
+            });       
            $("#p_content").ajaxSuccess(function(){
                if(!$.isEmptyObject('.updatebtn') ) {
                    $(".delbtn").delItem();
@@ -29,6 +32,6 @@
             
         });
 
-        </script><script></script><style type="text/css"></style></head><body><div  id = "p_wrap" style="width:900px;height:500px;padding:10px;"><div id="p_layout" ><div data-options="region:'west',split:true" style="width:170px;padding:10px" id ="leftTree"><ul id="tree" class="ztree"></ul></div><div data-options="region:'center' , <?php if(!empty($page)): ?>href: '<?php echo U('Channel/showInfo?pid='); echo ($page); ?>'<?php endif; ?> " style="padding:10px" id="p_content">
+        </script><script></script><style type="text/css"></style></head><body><div  id = "p_wrap" style="width:900px;height:500px;padding:10px;"><div id="p_layout" ><div data-options="region:'west',split:true" style="width:170px;padding:10px" id ="leftTree"><span><a href="#" id="rootColumn">根栏目操作</a></span><ul id="tree" class="ztree"></ul></div><div data-options="region:'center' , <?php if(!empty($page)): ?>href: '<?php echo U('Channel/showInfo' , array("pid"=>$page) ) ;?>'<?php endif; ?> " style="padding:10px" id="p_content">
                 选择品种
             </div></div></div><div id="menuContent" class="menuContent"><ul id="tree" class="ztree" style="margin-top:0; width:160px;"></ul></div><div id="menuWrap" class="menuContent" ><ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul></div></body></html>

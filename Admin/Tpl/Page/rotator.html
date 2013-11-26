@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>页面幻灯片控制</title>
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/uploadify/uploadify.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/ztree/css/zTreeStyle/zTreeStyle.css" />
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/admin.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/Css/table.css" />
+	<script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/easyui/easyloader.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/uploadify/jquery.uploadify.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.core-3.5.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/ztree/js/jquery.ztree.excheck-3.5.js"></script>	
+	<script type="text/javascript" src="__PUBLIC__/Js/formTree.js"></script>
+	<script type="text/javascript">
+	    $(function(){
+	        
+            easyloader.theme="bootstrap";
+            var channel = {$channel};
+            
+            $("#treeDemo").formTree({zNodes:channel,showChannel:false}).expandAll(true);
+            $("#channel").click(showMenu);
+            
+            $("#pic").uploadify({
+                'auto':false,
+                'buttonText' : '请选择文件',
+                'swf': '__PUBLIC__/uploadify/uploadify.swf',
+                'uploader' : '{:U("Public/getRotatorImage")}',
+                'button_image_url':'__APP__',
+                'fileTypeExts' : '*.gif; *.jpg; *.png',
+                'onUploadSuccess' : function(file, data, response) {
+                    var resp = "<tr><td><img src=__PUBLIC__/Upload/Rotate/s_"+data + "  alt='无图片' /></td>";
+                    resp +="<td>排序<input type='hidden' name='path' value ='" +data+"' ><input type='hidden' name='sort' value='0'  /></td>";
+                    resp +="<td><a href='#' class='delbtn' >删除</a></td></tr>";
+
+                    $('#u_pic').append(resp);
+                    $(".delbtn").linkbutton({iconCls: 'icon-cancel'});
+
+                }
+            });
+       
+	    });
+	</script>
+</head>
+<body>
+	<div>
+	    <form action="{:U('Page/rotatorHandle')}" method="post">
+	        图片标签: <input type="text" name="label"  /><br/>
+	        图片描述: <input type="text" name="description" /><br/>
+	        所属商品: <input type="text" readonly="readonly"  name="" id="channel" /><input type="hidden" name="product_id" id="pid" /><br/>
+	        图片上传: 
+	        <input type="file" name="" id="pic" />
+	        <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip'" onclick="javascript: $('#pic').uploadify('upload' , '*')">上传</a><br/>
+	        
+	        <table width="480" cellspacing="0" cellPadding="0" class="listTable" >
+	            <thead>
+	                <tr>
+    	                <td>图片</td>
+    	                <td>排序</td>
+    	                <td>删除</td>
+	                </tr>
+	            </thead>
+	            <tbody id="u_pic">
+	                
+	            </tbody>
+	            <tfoot>
+	            </tfoot>
+	        </table>
+	        
+	        <input type="submit" value="提交" />
+	    </form>
+	</div>
+	
+	    <div id="menuWrap" class="menuContent" >
+            <ul id="treeDemo" class="ztree" style="margin-top:0; width:160px;"></ul>
+        </div>    
+	
+</body>
+</html>

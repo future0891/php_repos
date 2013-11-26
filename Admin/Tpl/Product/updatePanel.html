@@ -13,6 +13,7 @@
 	   <input type="hidden" name="cid" value="{$product.cid}" />
 	   <label>商品价格:</label><input type="text" name="price" value = '{$product.price}'/><br/>
 	   <label>商品描述:</label><textarea name="description"  cols="30" rows="5" value = '{$product.description}'></textarea><br/>
+	   <label for="">是否推荐</label><input type="checkbox" name="recommend" <if condition ="$product['recommend'] eq 1">checked="checked"</if> value="1"  /><br/>
        <div id="file_wrap">
        <input type="file" name="pic" id="pic" />
        </div>	   

@@ -34,7 +34,7 @@
 			$this->display();
 		}
 		
-		private function genTree() {
+		public function genTree() {
 			$db = M('Channel');
 			$channel = $db->select();
 			foreach ($channel as $key => $value) {
@@ -85,8 +85,8 @@
 			$id = $this->_param("id");
 			if(0 !=$id) {
 				$db = M("Channel");
-				$pid = $db->where('id='.$id)->getField('pid');
-				$db->where('id='.$id)->delete();
+				$pid = $db->where(array('id'=>$id))->getField('pid');
+				$db->where(array('id'=>$id))->delete();
 			}
 			if($pid ==null) {
 				$pid = 0;

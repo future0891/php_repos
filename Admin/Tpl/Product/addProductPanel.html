@@ -19,12 +19,10 @@
 <script>
              $(function(){
                 easyloader.theme="bootstrap";
-                
-                
-            using(['panel' ,'layout' ,'linkbutton'] , function(){
-                $("#p_wrap").panel({title:"面板"});
-                $("#p_layout").layout({fit:true});
-            });
+                using(['panel' ,'layout' ,'linkbutton'] , function(){
+                    $("#p_wrap").panel({title:"面板"});
+                    $("#p_layout").layout({fit:true});
+                });
 
             $("#ss").on("click" , function(){
                 $("#leftTree").panel("refresh");
