@@ -6,4 +6,8 @@ class IndexAction extends AuthAction {
 	public function welcom() {
 		$this->display();
 	}
+	
+	public function testTree() {
+		$this->display();
+	}
 }

@@ -75,7 +75,7 @@
             <div data-options="region:'west',split:true" style="width:170px;padding:10px" id ="leftTree">
                 <ul id="tree" class="ztree"></ul>
             </div>
-            <div data-options="region:'center'" style="padding:10px" id="p_content" <notempty  name='flag'>href="{:U('Product/addAtt?pid')}{$flag}"</notempty> >
+            <div data-options="region:'center'" style="padding:10px" id="p_content" <notempty  name='flag'>href="{:U('Product/addAtt' , array('pid'=>$flag) )}"</notempty> >
             </div>
         </div>
     </div>

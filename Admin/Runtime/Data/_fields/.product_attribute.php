@@ -1,0 +1,1 @@
+<?php	return array ( 0 => 'id', 1 => 'channel_id', 2 => 'size', 3 => 'inventory', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(11)', 'channel_id' => 'int(11)', 'size' => 'varchar(255)', 'inventory' => 'int(11)', ), );?>

@@ -340,5 +340,51 @@
 			$this->display();
 		}
 		
+		/**
+		 * 商品打折
+		 */
+		public function discoutPanel() {
+			$this->display();
+		}
+ 		/**
+		 * 打折商品选择
+		 */
+		 public function discout($pid=0) {
+			$db = M("Channel");
+			$discout = M("Discout");
+			$exist_product = $discout->where(array('channel_id'=>$pid))->field('channel_id')->find();
+			if($exist_product != null) {
+				$db  = new Model();
+				$sql = "select c.name , d.* from t_channel c left join t_discout d on c.id = d.channel_id where c.id = %d";
+				$this->product = $db->query($sql ,$exist_product['channel_id'] );
+				$this->display("discoutUpdate");
+			} else {
+				if($pid!=0) {
+					$model = new Model();
+					$sql = "select c.id , c.name , p.price from t_channel c left join t_product p on c.id = p.cid where c.id=%d";
+					$this->product = $model->query($sql , $pid);
+					($this->product[0]['price'] == null) ? ($this->display('emptyProduct')) : $this->display();				
+				 	
+				} else {
+					$this->display('emptyProduct');
+				}
+			}
+			
+		 }
+		public function discoutHandle() {
+			$db = M("Discout");
+			$data = $_POST;
+			$channel = $_POST['channel_id'];
+			// if($db->where(array('channel_id'=>$channel))->find()==null){
+				// $this->redirect("discoutPanel");
+			// }
+			if($db->add($data)) {
+				$this->redirect("discoutPanel");
+			} else {
+				echo "失败";
+			}
+		}
+
+		 
 	}
 ?>

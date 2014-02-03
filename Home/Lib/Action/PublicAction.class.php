@@ -19,5 +19,9 @@
 		function footer() {
 			$this->display();
 		}
+		
+		function customerServ() {
+			$this->display();
+		}
 	}
 ?>

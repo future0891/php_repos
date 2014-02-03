@@ -1,5 +1,7 @@
 <include file="Public:header" />
+<include file="Public:customerServ"/>
 <include file="Public:leftColumn" />
+
    <!--主体第二部分开始-->
    <div id="main_content">
     
@@ -9,7 +11,11 @@
      
         <!--底部栏目开始-->
             <div id="column_bottom">
-                <div id="column_bottom_left"></div>
+                <div id="column_bottom_left">
+                    <span>
+                    {$contact.content}
+                    </span>
+                </div>
                 <div id="column_bottom_mid"></div>
                 <div id="column_bottom_right"></div>
             </div>

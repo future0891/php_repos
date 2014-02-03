@@ -1,8 +1,9 @@
 <?php
-	class SearchAction extends Action {
+	class SearchAction extends CommonAction {
 		//按品种查找商品	
 		public function category($cid = 0) {
 			if($cid !=0) {
+				$this->pageContent();
 				$model = new Model();
 				$sql = "select id,pid,name from t_channel where pid=%d";
 				$this->category = $model->query($sql , 0);
@@ -17,6 +18,7 @@
 		public function brand($bid = 0) {
 			if ($bid!=0) {
 				$model = new Model();
+			    $this->pageContent();
 				$sql = "select * from t_channel where pid=%d";
 				$this->brand = $model->query($sql , $bid);
 				$this->display();

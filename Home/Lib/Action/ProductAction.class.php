@@ -1,5 +1,5 @@
 <?php
-	class ProductAction extends Action {
+	class ProductAction extends CommonAction {
 		function showProduct($id = 0) {
 			if($id !=0) {
 				$pro = M("Product");
@@ -29,6 +29,7 @@
 				$this->assign('picture' , $picture);
 				$this->assign('size' , $attr);
 				$this->assign('cover' , $cover[0]['path']);
+				$this->pageContent();
 				$this->display();
 			}
 		}

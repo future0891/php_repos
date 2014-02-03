@@ -7,5 +7,9 @@
 		public function addProcess() {
 			M("Article")->add($_POST);
 		}
+		
+		public function addColumn() {
+			$this->display();
+		}
 	}
 ?>

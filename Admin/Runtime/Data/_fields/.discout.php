@@ -1,0 +1,1 @@
+<?php	return array ( 0 => 'id', 1 => 'channel_id', 2 => 'pre_price', 3 => 'after_price', '_autoinc' => true, '_pk' => 'id', '_type' => array ( 'id' => 'int(11) unsigned', 'channel_id' => 'int(11)', 'pre_price' => 'double(20,2)', 'after_price' => 'double(20,2)', ), );?>

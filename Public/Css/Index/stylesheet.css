@@ -676,3 +676,28 @@ a.more:hover{
 	text-align: left;
 	margin-left:10px;
 }
+#column_bottom_left span {
+	float:left;
+	margin-top: 76px;
+	margin-left: 10px;
+	width: 30px;
+	text-align: left;
+}
+#discoutSlide {
+	float:left ;
+	margin-left:45px;
+	width: 500px;
+}
+#discoutSlide ul li {
+	margin-right:30px;
+}
+#discoutSlide dd ,dt {
+	float:left;
+	clear:both;
+}
+.discout_btn {
+	float:left;
+	margin-left:15px;
+	margin-top:45px;
+}
+

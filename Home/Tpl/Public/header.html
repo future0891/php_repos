@@ -4,6 +4,28 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>我的服装店</title>
 <import type="css" file="Css.Index.stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/Js/jquery.min.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Js/jcarousellite_1.0.1.min.js"></script>     
+<script type="text/javascript">
+    $(function(){
+        $("#right_rotator").jCarouselLite({
+            btnNext: ".next",
+            btnPrev: ".prev",
+            auto: 3000,
+            speed: 1000,
+            visible: 1,
+            vertical: true
+        });
+        $("#discoutSlide").jCarouselLite({
+            btnNext: ".left_discout_btn",
+            btnPrev: ".right_discout_btn",
+            auto: 3000,
+            speed: 1000,
+            visible: 5,
+        });
+                
+    });
+</script>
 </head>
 <body>
 <!--头部内容开始-->
